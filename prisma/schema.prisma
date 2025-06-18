@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String       @id @default(uuid()) @db.Uuid
+  name            String
+  email           String       @unique
+  hashed_password String
+  registered_at   DateTime     @default(now())
+  roles           UserRole[]
+  banners         Banner[]
+}
+
+model Role {
+  id          Int              @id @default(autoincrement()) @db.SmallInt
+  name        String           @unique
+  users       UserRole[]
+  permissions RolePermission[]
+}
+
+model UserRole {
+  user_id    String   @db.Uuid
+  role_id    Int      @db.SmallInt
+  assigned_at DateTime @default(now())
+
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  role Role @relation(fields: [role_id], references: [id], onDelete: Cascade)
+
+  @@id([user_id, role_id])
+}
+
+model Permission {
+  id    Int               @id @default(autoincrement()) @db.SmallInt
+  name  String            @unique
+  roles RolePermission[]
+}
+
+model RolePermission {
+  role_id       Int         @db.SmallInt
+  permission_id Int         @db.SmallInt
+
+  role       Role       @relation(fields: [role_id], references: [id], onDelete: Cascade)
+  permission Permission @relation(fields: [permission_id], references: [id], onDelete: Cascade)
+
+  @@id([role_id, permission_id])
+}
+
+model Banner {
+  id               String     @id @default(uuid()) @db.Uuid
+  image_url        String
+  destination_link String
+  start_date       DateTime   @db.Date
+  end_date         DateTime?  @db.Date
+  position_id      Int        @db.SmallInt
+  user_id          String     @db.Uuid
+  renewal_strategy RenewalStrategy
+  renewal_period   Int?       @db.SmallInt
+  display_order    Int?       @db.SmallInt
+
+  user     User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  position Position @relation(fields: [position_id], references: [id], onDelete: Restrict)
+}
+
+model Position {
+  id            Int      @id @default(autoincrement()) @db.SmallInt
+  name          String   @unique
+  max_banners   Int      @db.SmallInt
+  allows_order  Boolean
+  banners       Banner[]
+}
+
+enum RenewalStrategy {
+  manual
+  automatic
+}
