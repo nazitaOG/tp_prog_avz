@@ -66,7 +66,6 @@ CREATE TABLE "Position" (
     "id" SMALLSERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "max_banners" SMALLINT NOT NULL,
-    "allows_order" BOOLEAN NOT NULL,
 
     CONSTRAINT "Position_pkey" PRIMARY KEY ("id")
 );

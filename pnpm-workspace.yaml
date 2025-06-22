@@ -2,5 +2,6 @@ ignoredBuiltDependencies:
   - '@prisma/client'
 
 onlyBuiltDependencies:
+  - '@nestjs/core'
   - '@prisma/engines'
   - prisma

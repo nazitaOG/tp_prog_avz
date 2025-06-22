@@ -1,23 +1,56 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+<div align="center">
+  <img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" />
+  <h1>TP Banners</h1>
+  <p><strong>Sistema de Gestión de Banners con NestJS</strong></p>
+</div>
 
-# TP BANNERS
+---
 
+## Requisitos Previos
 
-1. Instalar dependencias:
+- Node.js (versión 16 o superior)
+- Docker y Docker Compose
+- pnpm (recomendado) o npm
+
+## Instalación y Configuración
+
+### 1. Instalar Dependencias
+
 ```bash
 pnpm install
 ```
 
-2. Clonar el archivo ```.env.template``` y renombrarlo a ```.env``` y cambiar las variables de entorno a unas propias
+### 2. Configurar Variables de Entorno
 
-3. Iniciar la base de datos
+# Copiar el archivo de configuración
+
+# Editar las variables según tu configuración
+
+
+
+### 3. Iniciar Base de Datos
+
 ```bash
+# Levantar PostgreSQL con Docker
 docker-compose up -d
 ```
 
-4. Iniciar la aplicación en modo desarrollo:
+### 4. Configurar Base de Datos
+
 ```bash
+# Ejecutar migraciones
+npx prisma migrate dev --name init
+
+# Poblar la base de datos con datos de ejemplo
+npx prisma db seed
+```
+
+### 5. Iniciar Aplicación
+
+```bash
+# Modo desarrollo
 pnpm run start:dev
+
+# Modo producción
+pnpm run start:prod
 ```

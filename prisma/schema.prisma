@@ -8,13 +8,13 @@ datasource db {
 }
 
 model User {
-  id              String       @id @default(uuid()) @db.Uuid
+  id              String     @id @default(uuid()) @db.Uuid
   name            String
-  email           String       @unique
+  email           String     @unique
   hashed_password String
-  registered_at   DateTime     @default(now())
-  roles           UserRole[]
-  banners         Banner[]
+  registered_at   DateTime   @default(now())
+  roles           UserRole[] @relation("UserToUserRole")
+  banners         Banner[]   @relation("UserToBanner")
 }
 
 model Role {
@@ -25,25 +25,25 @@ model Role {
 }
 
 model UserRole {
-  user_id    String   @db.Uuid
-  role_id    Int      @db.SmallInt
+  user_id     String   @db.Uuid
+  role_id     Int      @db.SmallInt
   assigned_at DateTime @default(now())
 
-  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user User @relation("UserToUserRole", fields: [user_id], references: [id], onDelete: Cascade)
   role Role @relation(fields: [role_id], references: [id], onDelete: Cascade)
 
   @@id([user_id, role_id])
 }
 
 model Permission {
-  id    Int               @id @default(autoincrement()) @db.SmallInt
-  name  String            @unique
+  id    Int              @id @default(autoincrement()) @db.SmallInt
+  name  String           @unique
   roles RolePermission[]
 }
 
 model RolePermission {
-  role_id       Int         @db.SmallInt
-  permission_id Int         @db.SmallInt
+  role_id       Int @db.SmallInt
+  permission_id Int @db.SmallInt
 
   role       Role       @relation(fields: [role_id], references: [id], onDelete: Cascade)
   permission Permission @relation(fields: [permission_id], references: [id], onDelete: Cascade)
@@ -52,27 +52,26 @@ model RolePermission {
 }
 
 model Banner {
-  id               String     @id @default(uuid()) @db.Uuid
+  id               String          @id @default(uuid()) @db.Uuid
   image_url        String
   destination_link String
-  start_date       DateTime   @db.Date
-  end_date         DateTime?  @db.Date
-  position_id      Int        @db.SmallInt
-  user_id          String     @db.Uuid
+  start_date       DateTime        @db.Date
+  end_date         DateTime?       @db.Date
+  position_id      Int             @db.SmallInt
+  user_id          String          @db.Uuid
   renewal_strategy RenewalStrategy
-  renewal_period   Int?       @db.SmallInt
-  display_order    Int?       @db.SmallInt
+  renewal_period   Int?            @db.SmallInt
+  display_order    Int?            @db.SmallInt
 
-  user     User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user     User     @relation("UserToBanner", fields: [user_id], references: [id], onDelete: Cascade)
   position Position @relation(fields: [position_id], references: [id], onDelete: Restrict)
 }
 
 model Position {
-  id            Int      @id @default(autoincrement()) @db.SmallInt
-  name          String   @unique
-  max_banners   Int      @db.SmallInt
-  allows_order  Boolean
-  banners       Banner[]
+  id           Int      @id @default(autoincrement()) @db.SmallInt
+  name         String   @unique
+  max_banners  Int      @db.SmallInt
+  banners      Banner[]
 }
 
 enum RenewalStrategy {
