@@ -1,11 +1,9 @@
 import { RenewalStrategy } from "@prisma/client";
-import { Transform } from "class-transformer";
-import { IsNotEmpty, IsString, IsUrl, IsOptional, IsUUID, IsNumber, IsEnum, IsDate, IsIn, IsPositive, Min, Max } from "class-validator";
+import { Type } from "class-transformer";
+import { IsNotEmpty, IsString, IsUrl, IsOptional, IsUUID, IsNumber, IsDate, IsIn, IsPositive, Min, Max, IsInt, IsDefined, IsEnum } from "class-validator";
 
 export class CreateBannerDto {
-    @IsUrl()
-    @IsNotEmpty()
-    @IsString()
+    @IsUrl() @IsNotEmpty() @IsString()
     image_url: string;
 
     @IsUrl()
@@ -13,12 +11,12 @@ export class CreateBannerDto {
     @IsString()
     destination_link: string;
 
-    @Transform(({ value }) => value ? new Date(value) : null)
+    @Type(() => Date)
     @IsDate()
     @IsOptional()
     start_date?: Date;
 
-    @Transform(({ value }) => value ? new Date(value) : null)
+    @Type(() => Date)
     @IsDate()
     @IsOptional()
     end_date?: Date;
@@ -27,13 +25,16 @@ export class CreateBannerDto {
     @IsNotEmpty()
     user_id: string;
 
-    @IsNumber()
-    @IsNotEmpty()
+    @IsDefined()
+    @IsInt()
+    @Min(1)
+    @Type(() => Number)
     position_id: number;
 
     @IsEnum(RenewalStrategy)
-    @IsNotEmpty()
     renewal_strategy: RenewalStrategy;
+
+
 
     @IsOptional()
     @IsNumber()
@@ -42,7 +43,7 @@ export class CreateBannerDto {
 
     @IsNumber()
     @Min(1)
-    @Max(3)     
+    @Max(3)
     @IsPositive()
     @IsOptional()
     display_order?: number;

@@ -4,6 +4,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { UsersModule } from './users/users.module';
 import { CommonModule } from './common/common.module';
 import { BannersModule } from './banners/banners.module';
+import { FilesModule } from './files/files.module';
 @Module({
   imports: [
     ConfigModule.forRoot({}),
@@ -12,6 +13,7 @@ import { BannersModule } from './banners/banners.module';
     BannersModule,
     CommonModule,
     BannersModule,
+    FilesModule,
   ],
 })
 export class AppModule {}

@@ -3,7 +3,7 @@ import { isUUID } from 'class-validator';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
-import { handleRequest } from 'src/utils/handle-request';
+import { handleRequest } from 'src/utils/hadle-request/handle-request';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
