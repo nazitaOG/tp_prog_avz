@@ -2,12 +2,9 @@ import { OmitType, PartialType } from '@nestjs/mapped-types';
 import { CreateBannerDto } from './create-banner.dto';
 import { AtLeastOneField } from 'src/validators/at-least-one-field';
 
-// Extend CreateBannerDto but remove 'user_id'
-export class UpdateBannerDto extends PartialType(
-    OmitType(CreateBannerDto, ['user_id'] as const),
-) { }
 
-// Apply the AtLeastOneField decorator on the remaining fields
+export class UpdateBannerDto extends PartialType(CreateBannerDto) { }
+
 AtLeastOneField(
     [
         'image_url',

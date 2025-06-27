@@ -5,8 +5,10 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { handleRequest } from 'src/utils/hadle-request/handle-request';
 import { BannerValidator } from './validations/banner.validator';
 import { FilesService } from 'src/files/files.service';
-import { CreateBannerRequestDto } from './dto/create-banner-request.dto';
-import { Prisma } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
+import { UserWithRoles } from 'src/prisma/interfaces/user-with-role.interface';
+import { ValidRoles } from 'src/auth/interfaces/valid-roles.interface';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 @Injectable()
 export class BannersService {
@@ -19,21 +21,17 @@ export class BannersService {
   ) { }
 
   async create(
-    body: CreateBannerRequestDto,
+    body: CreateBannerDto,
     file: Express.Multer.File,
+    user: User,
   ) {
     return handleRequest(async () => {
       if (!file) throw new BadRequestException('Image file is required');
 
       const { secure_url, public_id } = await this.filesService.uploadImage(file);
 
-      const dto: CreateBannerDto = {
-        ...body,
-        image_url: secure_url,
-      };
-
       try {
-        const validData = await this.validator.validateCreate(dto);
+        const validData = await this.validator.validateCreate(body, user, secure_url);
         return await this.prisma.banner.create({ data: validData });
       } catch (err) {
         if (public_id) {
@@ -44,9 +42,12 @@ export class BannersService {
     }, 'Failed to create banner', this.logger);
   }
 
-  findAll() {
+  findAll(paginationDto: PaginationDto) {
     return handleRequest(async () => {
+      const { limit = 10, offset = 0 } = paginationDto;
       return this.prisma.banner.findMany({
+        skip: offset,
+        take: limit,
         include: {
           user: true,
           position: true,
@@ -71,9 +72,16 @@ export class BannersService {
   async update(
     id: string,
     body: UpdateBannerDto,
+    user: UserWithRoles,
     file?: Express.Multer.File,
   ) {
     return handleRequest(async () => {
+
+      if (!file && Object.keys(body).length === 0) {
+        throw new BadRequestException(
+          'You must provide at least one field or an image to update.'
+        );
+      }
       // 1) Si viene file, subo y guardo secure_url + public_id para rollback
       let secure_url: string | undefined;
       let public_id: string | undefined;
@@ -83,15 +91,9 @@ export class BannersService {
         public_id = upload.public_id;
       }
 
-      // 2) Armo el DTO final: imagen solo si subió
-      const dto: UpdateBannerDto = {
-        ...body,
-        ...(file ? { image_url: secure_url! } : {}),
-      };
-
       try {
         // 3) Validaciones de negocio
-        const validData = await this.validator.validateUpdate(dto, id);
+        const validData = await this.validator.validateUpdate(body, id, user, secure_url);
 
         // 4) Preparo el objeto para Prisma:
         //    convierto position_id en nested connect, si viene
@@ -118,11 +120,20 @@ export class BannersService {
 
 
 
-  remove(id: string) {
-    return handleRequest(() =>
-      this.prisma.banner.delete({ where: { id } }),
-      'Failed to delete banner',
-      this.logger
-    );
+  remove(id: string, user: UserWithRoles) {
+    return handleRequest(async () => {
+      const banner = await this.prisma.banner.findUnique({
+        where: { id },
+      });
+      if (!banner) {
+        throw new NotFoundException(`Banner ${id} not found`);
+      }
+
+      if (banner.user_id !== user.id && !user.roles.some(role => role.role_id === ValidRoles.admin)) {
+        throw new BadRequestException('You are not authorized to delete this banner');
+      }
+
+      return await this.prisma.banner.delete({ where: { id } });
+    }, 'Failed to delete banner', this.logger);
   }
 }

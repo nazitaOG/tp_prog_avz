@@ -1,6 +1,3 @@
-// src/banners/validations/banner.validator.ts
-
-
 /////// tratar de factorizar mejor esta hecho un asco este codigo
 import {
     BadRequestException,
@@ -9,9 +6,11 @@ import {
     NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { RenewalStrategy } from '@prisma/client';
+import { RenewalStrategy, User } from '@prisma/client';
 import { CreateBannerDto } from '../dto/create-banner.dto';
 import { UpdateBannerDto } from '../dto/update-banner.dto';
+import { ValidRoles } from 'src/auth/interfaces/valid-roles.interface';
+import { UserWithRoles } from 'src/prisma/interfaces/user-with-role.interface';
 
 @Injectable()
 export class BannerValidator {
@@ -22,7 +21,7 @@ export class BannerValidator {
     /**
      * Validación completa para creación de banners.
      */
-    async validateCreate(dto: CreateBannerDto) {
+    async validateCreate(dto: CreateBannerDto, user: User, secure_url: string) {
         this.logger.log('Validating banner creation DTO');
 
         const start_date = dto.start_date ?? new Date();
@@ -44,7 +43,7 @@ export class BannerValidator {
         );
 
         return {
-            image_url: dto.image_url,
+            image_url: secure_url,
             destination_link: dto.destination_link,
             start_date,
             end_date,
@@ -54,7 +53,7 @@ export class BannerValidator {
                 dto.renewal_strategy === RenewalStrategy.automatic
                     ? dto.renewal_period
                     : null,
-            user_id: dto.user_id,
+            user_id: user.id,
             position_id: position.id,
             display_order: dto.display_order,
         };
@@ -69,6 +68,8 @@ export class BannerValidator {
     async validateUpdate(
         dto: UpdateBannerDto,
         bannerId: string,
+        user: UserWithRoles,
+        secure_url?: string,
     ): Promise<UpdateBannerDto> {
         this.logger.log(`Validating update for banner ${bannerId}`);
 
@@ -79,10 +80,15 @@ export class BannerValidator {
                 start_date: true,
                 end_date: true,
                 position_id: true,
+                user_id: true,
             },
         });
         if (!existing) {
             throw new NotFoundException(`Banner ${bannerId} not found`);
+        }
+
+        if (user.id !== existing.user_id && !user.roles.some(role => role.role_id === ValidRoles.admin)) {
+            throw new BadRequestException('You are not authorized to update this banner');
         }
 
         // 2) Validar rango de fechas
@@ -157,7 +163,6 @@ export class BannerValidator {
 
         return dto;
     }
-
     // -------------------- Helpers privados --------------------
 
     private validateDates(start: Date, end: Date | null) {

@@ -4,6 +4,14 @@ import * as bcrypt from 'bcrypt';
 const prisma = new PrismaClient();
 
 async function main() {
+
+    if (process.env.NODE_ENV !== 'development') {
+        console.error(
+            '⛔️ Seeding solo permitido en development. NODE_ENV=',
+            process.env.NODE_ENV
+        );
+        process.exit(1);
+    }
     // Delete all data respecting relationships (from child to parent)
     await prisma.banner.deleteMany();
     await prisma.userRole.deleteMany();

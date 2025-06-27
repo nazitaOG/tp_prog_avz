@@ -2,7 +2,7 @@ import { Transform } from "class-transformer";
 import { IsEmail, IsNotEmpty, IsString, MinLength, IsLowercase, IsStrongPassword, IsArray, IsOptional } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
 
-export class CreateUserDto {
+export class RegisterUserDto {
     @ApiProperty({
         description: 'The name of the user (optional)',
         example: 'John Doe',
@@ -19,7 +19,7 @@ export class CreateUserDto {
     @ApiProperty({
         description: 'The email of the user',
         example: 'test@test.com',
-        default: '',
+        default: 'user@example.com',
     })
     @IsEmail()
     @IsNotEmpty()
@@ -33,20 +33,10 @@ export class CreateUserDto {
     @ApiProperty({
         description: 'The password of the user',
         example: 'Password123!',
-        default: '',
+        default: 'Password123!',
     })
     @IsStrongPassword()
     @IsNotEmpty()
     @IsString()
     password: string;
-
-    @ApiProperty({
-        description: 'The roles of the user (admin, advertiser, user) (optional)',
-        example: ['user'],
-        default: ['user'],
-    })
-    @IsArray()
-    @IsString({ each: true })
-    @IsOptional()
-    roles?: string[];
 }

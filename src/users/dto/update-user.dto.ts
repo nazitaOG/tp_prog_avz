@@ -1,14 +1,5 @@
-import { PartialType } from '@nestjs/mapped-types';
+import { ApiPropertyOptional, PartialType } from '@nestjs/swagger';
 import { CreateUserDto } from './create-user.dto';
-import {
-    IsOptional,
-    IsString,
-    IsStrongPassword,
-    IsEmail,
-    MinLength,
-    IsNotEmpty,
-} from 'class-validator';
-import { Transform } from 'class-transformer';
 import { AtLeastOneField } from 'src/validators/at-least-one-field';
 
 
@@ -16,29 +7,10 @@ import { AtLeastOneField } from 'src/validators/at-least-one-field';
     message: 'You must provide at least one field to update.',
 })
 export class UpdateUserDto extends PartialType(CreateUserDto) {
-    // @IsOptional()
-    // @IsString()
-    // @IsNotEmpty()
-    // @MinLength(3)
-    // @Transform(({ value }) =>
-    //     value.toLowerCase().replaceAll(' ', '').replaceAll("'", '')
-    // )
-    // name?: string;
-
-    // @IsOptional()
-    // @IsEmail()
-    // @IsString()
-    // @IsNotEmpty()
-    // @Transform(({ value }) =>
-    //     value.toLowerCase().replaceAll(' ', '').replaceAll("'", '')
-    // )
-    // email?: string;
-
-    // @IsOptional()
-    // @IsStrongPassword()
-    // @IsNotEmpty()
-    // @IsString()
-    // password?: string;
-
-    // Recieve all from create user dto
+    @ApiPropertyOptional({
+        description: 'Only admins can change roles. Omit if you are not admin.',
+        example: ['user'],
+        type: [String],
+    })
+    roles?: string[];
 }

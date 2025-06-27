@@ -1,10 +1,8 @@
 import { RenewalStrategy } from "@prisma/client";
 import { Type } from "class-transformer";
-import { IsNotEmpty, IsString, IsUrl, IsOptional, IsUUID, IsNumber, IsDate, IsIn, IsPositive, Min, Max, IsInt, IsDefined, IsEnum } from "class-validator";
+import { IsNotEmpty, IsString, IsUrl, IsOptional, IsNumber, IsDate, IsIn, IsPositive, Min, Max, IsInt, IsDefined, IsEnum } from "class-validator";
 
 export class CreateBannerDto {
-    @IsUrl() @IsNotEmpty() @IsString()
-    image_url: string;
 
     @IsUrl()
     @IsNotEmpty()
@@ -21,10 +19,6 @@ export class CreateBannerDto {
     @IsOptional()
     end_date?: Date;
 
-    @IsUUID()
-    @IsNotEmpty()
-    user_id: string;
-
     @IsDefined()
     @IsInt()
     @Min(1)
@@ -33,8 +27,6 @@ export class CreateBannerDto {
 
     @IsEnum(RenewalStrategy)
     renewal_strategy: RenewalStrategy;
-
-
 
     @IsOptional()
     @IsNumber()

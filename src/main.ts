@@ -1,5 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
+import { SwaggerModule } from '@nestjs/swagger';
+import { DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -15,6 +17,26 @@ async function bootstrap() {
     forbidNonWhitelisted: true,
     transformOptions: { enableImplicitConversion: true },
   }));
+
+  const config = new DocumentBuilder()
+    .setTitle('TP Banners')
+    .setDescription('Endpoint tp-banners')
+    .setVersion('1.0')
+    .addTag('banners')
+    .addTag('auth')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+      'JWT-auth',
+    )
+    .build();
+
+    
+  const documentFactory = () => SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, documentFactory);
 
   await app.listen(process.env.PORT ?? 3000);
 }
