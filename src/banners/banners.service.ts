@@ -1,12 +1,12 @@
 import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { CreateBannerDto } from './dto/create-banner.dto';
 import { UpdateBannerDto } from './dto/update-banner.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { handleRequest } from 'src/utils/hadle-request/handle-request';
+import { PrismaService } from 'src/common/prisma/prisma.service';
+import { handleRequest } from 'src/common/utils/hadle-request/handle-request';
 import { BannerValidator } from './validations/banner.validator';
 import { FilesService } from 'src/files/files.service';
 import { Prisma, User } from '@prisma/client';
-import { UserWithRoles } from 'src/prisma/interfaces/user-with-role.interface';
+import { UserWithRoles } from 'src/common/prisma/interfaces/user-with-role.interface';
 import { ValidRoles } from 'src/auth/interfaces/valid-roles.interface';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 
@@ -23,10 +23,12 @@ export class BannersService {
   async create(
     body: CreateBannerDto,
     file: Express.Multer.File,
-    user: User,
+    user: UserWithRoles,
   ) {
     return handleRequest(async () => {
-      if (!file) throw new BadRequestException('Image file is required');
+      if (!file) {
+        throw new BadRequestException('Image file is required');
+      }
 
       const { secure_url, public_id } = await this.filesService.uploadImage(file);
 
@@ -56,6 +58,25 @@ export class BannersService {
     }, 'Failed to get banners', this.logger);
   }
 
+  async findAllActive() {
+    return handleRequest(async () => {
+      const today = new Date();
+      return this.prisma.banner.findMany({
+        where: {
+          start_date: { lte: today },
+          AND: [
+            {
+              OR: [
+                { end_date: null },
+                { end_date: { gte: today } },
+              ],
+            },
+          ],
+        }
+      });
+    }, 'Failed to get active banners', this.logger);
+  }
+
   findOne(id: string) {
     return handleRequest(async () => {
       const banner = await this.prisma.banner.findUnique({ where: { id } });
@@ -66,8 +87,6 @@ export class BannersService {
       return banner;
     }, 'Failed to get banner');
   }
-
-  /////retocar esta madrepara que quede mas limpio
 
   async update(
     id: string,
@@ -82,7 +101,7 @@ export class BannersService {
           'You must provide at least one field or an image to update.'
         );
       }
-      // 1) Si viene file, subo y guardo secure_url + public_id para rollback
+      // if file, upload and save secure_url + public_id for rollback
       let secure_url: string | undefined;
       let public_id: string | undefined;
       if (file) {
@@ -92,21 +111,10 @@ export class BannersService {
       }
 
       try {
-        // 3) Validaciones de negocio
         const validData = await this.validator.validateUpdate(body, id, user, secure_url);
-
-        // 4) Preparo el objeto para Prisma:
-        //    convierto position_id en nested connect, si viene
-        const dataForPrisma: any = { ...validData };
-        if (validData.position_id != null) {
-          dataForPrisma.position = { connect: { id: validData.position_id } };
-          delete dataForPrisma.position_id;
-        }
-
-        // 5) Ejecuto el update
         return await this.prisma.banner.update({
           where: { id },
-          data: dataForPrisma as Prisma.BannerUpdateInput,
+          data: validData
         });
       } catch (err) {
         // 6) Si falló y hubo subida, hago rollback de la imagen
@@ -117,7 +125,6 @@ export class BannersService {
       }
     }, 'Failed to update banner', this.logger);
   }
-
 
 
   remove(id: string, user: UserWithRoles) {

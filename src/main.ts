@@ -22,8 +22,6 @@ async function bootstrap() {
     .setTitle('TP Banners')
     .setDescription('Endpoint tp-banners')
     .setVersion('1.0')
-    .addTag('banners')
-    .addTag('auth')
     .addBearerAuth(
       {
         type: 'http',
@@ -38,6 +36,11 @@ async function bootstrap() {
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);
 
+  // Only to force the cron job to run on startup
+  // const notificationsService = app.get(NotificationsService);
+  // await notificationsService.notifyExpiringBanners();
+  // await notificationsService.deleteExpiredBanners();
+
   await app.listen(process.env.PORT ?? 3000);
 }
-bootstrap();
+export { bootstrap };

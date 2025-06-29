@@ -7,6 +7,7 @@ export class CreateUserDto {
         description: 'The name of the user (optional)',
         example: 'John Doe',
         default: null,
+        required: false,
     })
     @IsOptional()
     @IsString()
@@ -20,6 +21,7 @@ export class CreateUserDto {
         description: 'The email of the user',
         example: 'test@test.com',
         default: '',
+        required: true,
     })
     @IsEmail()
     @IsNotEmpty()
@@ -34,6 +36,7 @@ export class CreateUserDto {
         description: 'The password of the user',
         example: 'Password123!',
         default: '',
+        required: true,
     })
     @IsStrongPassword()
     @IsNotEmpty()
@@ -44,6 +47,7 @@ export class CreateUserDto {
         description: 'The roles of the user (admin, advertiser, user) (optional)',
         example: ['user'],
         default: ['user'],
+        required: false,
     })
     @IsArray()
     @IsString({ each: true })

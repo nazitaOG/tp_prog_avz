@@ -2,11 +2,11 @@ import { BadRequestException, ForbiddenException, Injectable, Logger, NotFoundEx
 import * as bcrypt from 'bcrypt';
 import { isUUID } from 'class-validator';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { handleRequest } from 'src/utils/hadle-request/handle-request';
+import { PrismaService } from 'src/common/prisma/prisma.service';
+import { handleRequest } from 'src/common/utils/hadle-request/handle-request';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UserWithRoles } from 'src/prisma/interfaces/user-with-role.interface';
+import { UserWithRoles } from 'src/common/prisma/interfaces/user-with-role.interface';
 import { ValidRoles } from 'src/auth/interfaces/valid-roles.interface';
 
 
@@ -58,7 +58,6 @@ export class UsersService {
     const { limit = 10, offset = 0 } = paginationDto;
     return handleRequest(
       () => this.prisma.user.findMany({
-        // make this way to avoid returning the password
         skip: offset,
         take: limit,
         select: {
@@ -201,6 +200,7 @@ export class UsersService {
         // admin can delete other users by id or email
         const userDeleted = await this.prisma.user.delete({
           where: isId ? { id: term } : { email: term },
+          include: { roles: true, banners: true },
         });
 
         const { hashed_password: _, ...userWithoutPassword } = userDeleted;

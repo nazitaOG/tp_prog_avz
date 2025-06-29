@@ -1,16 +1,11 @@
-/////// tratar de factorizar mejor esta hecho un asco este codigo
-import {
-    BadRequestException,
-    Injectable,
-    Logger,
-    NotFoundException,
-} from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { RenewalStrategy, User } from '@prisma/client';
+import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { PrismaService } from 'src/common/prisma/prisma.service';
+import { Position, RenewalStrategy, User } from '@prisma/client';
 import { CreateBannerDto } from '../dto/create-banner.dto';
 import { UpdateBannerDto } from '../dto/update-banner.dto';
 import { ValidRoles } from 'src/auth/interfaces/valid-roles.interface';
-import { UserWithRoles } from 'src/prisma/interfaces/user-with-role.interface';
+import { UserWithRoles } from 'src/common/prisma/interfaces/user-with-role.interface';
+import { validateDates, validateRenewalLogic, validateBannerCount, validateDisplayOrder, getPosition } from './utils';
 
 @Injectable()
 export class BannerValidator {
@@ -18,35 +13,36 @@ export class BannerValidator {
 
     constructor(private readonly prisma: PrismaService) { }
 
-    /**
-     * Validación completa para creación de banners.
-     */
-    async validateCreate(dto: CreateBannerDto, user: User, secure_url: string) {
+    async validateCreate(dto: CreateBannerDto, user: UserWithRoles, secureUrl: string) {
         this.logger.log('Validating banner creation DTO');
 
-        const start_date = dto.start_date ?? new Date();
-        const end_date = dto.end_date ?? null;
+        // If start_date is not provided, set it to the current date
+        const startDate = dto.start_date ?? new Date();
+        // If end_date is not provided, set it to null
+        const endDate = dto.end_date ?? null;
 
-        this.validateDates(start_date, end_date);
-        this.validateRenewalPeriod(dto.renewal_strategy, dto.renewal_period);
+        // Validate dates
+        validateDates(startDate, endDate);
 
-        const position = await this.getPositionOrFail(dto.position_id);
-        await this.validateBannerCount(
-            position.id,
-            start_date,
-            position.max_banners,
-        );
-        // aquí dto.display_order puede ser undefined
-        await this.validateDisplayOrderIfNeeded(
-            dto.display_order,
-            position.max_banners,
-        );
+        // Validate renewal period
+        validateRenewalLogic(dto.renewal_strategy, dto.renewal_period, endDate);
+
+
+        // Validate if position exists
+        const position = await getPosition(this.prisma, dto.position_id);
+
+        // Validate if banner count is less than max_banners at the same time range
+        validateBannerCount(this.prisma, position.id, startDate, endDate, position.max_banners);
+
+
+        // Validate display order
+        validateDisplayOrder(this.prisma, dto.display_order, position.max_banners);
 
         return {
-            image_url: secure_url,
+            image_url: secureUrl,
             destination_link: dto.destination_link,
-            start_date,
-            end_date,
+            start_date: startDate,
+            end_date: endDate,
             renewal_strategy:
                 (dto.renewal_strategy as RenewalStrategy) ?? RenewalStrategy.manual,
             renewal_period:
@@ -59,27 +55,15 @@ export class BannerValidator {
         };
     }
 
-    /**
-     * Validación para actualización de banners.
-     * Reglas de negocio idénticas a `validateCreate`, pero:
-     *  - excluye el propio banner del conteo de activos
-     *  - sólo valida display_order si viene en el DTO
-     */
-    async validateUpdate(
-        dto: UpdateBannerDto,
-        bannerId: string,
-        user: UserWithRoles,
-        secure_url?: string,
-    ): Promise<UpdateBannerDto> {
+    async validateUpdate(dto: UpdateBannerDto, bannerId: string, user: UserWithRoles, secureUrl?: string): Promise<UpdateBannerDto> {
         this.logger.log(`Validating update for banner ${bannerId}`);
 
-        // 1) Obtener banner existente
         const existing = await this.prisma.banner.findUnique({
             where: { id: bannerId },
             select: {
                 start_date: true,
                 end_date: true,
-                position_id: true,
+                position: { select: { id: true, max_banners: true, name: true } },
                 user_id: true,
             },
         });
@@ -87,63 +71,40 @@ export class BannerValidator {
             throw new NotFoundException(`Banner ${bannerId} not found`);
         }
 
+        //if dont have admin role, only the owner of the banner can update it
         if (user.id !== existing.user_id && !user.roles.some(role => role.role_id === ValidRoles.admin)) {
             throw new BadRequestException('You are not authorized to update this banner');
         }
 
-        // 2) Validar rango de fechas
-        const start_date = dto.start_date ?? existing.start_date;
-        const end_date = dto.end_date ?? existing.end_date ?? null;
-        this.validateDates(start_date, end_date);
+        const startDate = dto.start_date ?? existing.start_date;
+        const endDate = dto.end_date ?? existing.end_date ?? null;
+        validateDates(startDate, endDate);
 
-        // 3) Si viene renovación, validar estrategia y periodo
+        // If renewal_strategy is provided, validate it
         if (dto.renewal_strategy) {
-            if (
-                !Object.values(RenewalStrategy).includes(
-                    dto.renewal_strategy as RenewalStrategy,
-                )
-            ) {
-                this.logger.error(
-                    `Invalid renewal_strategy: ${dto.renewal_strategy}`,
-                );
-                throw new BadRequestException(
-                    `Invalid renewal_strategy: ${dto.renewal_strategy}`,
-                );
-            }
-            this.validateRenewalPeriod(
-                dto.renewal_strategy as RenewalStrategy,
-                dto.renewal_period,
-            );
+            validateRenewalLogic(dto.renewal_strategy, dto.renewal_period, endDate);
         }
 
-        // 4) Determinar qué posición validar
-        const positionId = dto.position_id ?? existing.position_id;
-        const position = await this.getPositionOrFail(positionId);
+        // if position_id is provided use it, otherwise use the existing position_id
+        let position: Position = existing.position;
+        if (dto.position_id) {
+            position = await getPosition(this.prisma, dto.position_id);
+        }
 
-        // ──────────────── AÑADIDO ────────────────
-        // 4.1) Si la posición admite >1 banners, force require display_order:
+        // if position allows multiple banners, display_order is required
         if (position.max_banners > 1 && dto.display_order == null) {
-            this.logger.error(
-                `display_order is required when position ${positionId} allows multiple banners`
-            );
             throw new BadRequestException(
-                'display_order is required when position allows multiple banners'
+                'display_order is required when position allows multiple banners',
             );
         }
-        // ──────────────────────────────────────────
 
 
-        // 5) Contar banners activos excluyendo este mismo
-        await this.validateBannerCount(
-            position.id,
-            start_date,
-            position.max_banners,
-            bannerId,
-        );
+        // validate banner count excluding the current banner
+        validateBannerCount(this.prisma, position.id, startDate, endDate, position.max_banners, bannerId);
 
-        // 6) Sólo si envían display_order, validarlo correctamente
-        if (dto.display_order != null) {
-            // 6.a) no permitir en posiciones de solo 1 banner
+        // if display_order is provided, validate it
+        if (dto.display_order) {
+            // not allow display_order in positions with only one banner
             if (position.max_banners <= 1) {
                 this.logger.error(
                     `display_order not allowed for position ${position.id} (max_banners=1)`,
@@ -152,136 +113,24 @@ export class BannerValidator {
                     'display_order is not allowed when position allows only one banner',
                 );
             }
-            // 6.b) TS sabe que aquí dto.display_order es number
-            const order: number = dto.display_order;
-            await this.validateDisplayOrderIfNeeded(
-                order,
-                position.max_banners,
-                bannerId,
-            );
+
+            validateDisplayOrder(this.prisma, dto.display_order, position.max_banners, bannerId);
         }
 
-        return dto;
-    }
-    // -------------------- Helpers privados --------------------
-
-    private validateDates(start: Date, end: Date | null) {
-        if (end && end <= start) {
-            this.logger.error(
-                `Invalid date range: start_date=${start.toISOString()}, end_date=${end.toISOString()}`,
-            );
-            throw new BadRequestException(
-                'end_date must be after start_date',
-            );
-        }
+        return {
+            ...(dto.destination_link !== undefined && {
+                destination_link: dto.destination_link,
+            }),
+            ...(dto.start_date !== undefined && { start_date: startDate }),
+            ...(dto.end_date !== undefined && { end_date: endDate ?? undefined }),
+            ...(dto.renewal_strategy !== undefined && { renewal_strategy: dto.renewal_strategy }),
+            ...(dto.renewal_period !== undefined && dto.renewal_strategy === RenewalStrategy.automatic && {
+                renewal_period: dto.renewal_period!,
+            }),
+            ...(dto.position_id !== undefined && { position_id: position.id }),
+            ...(dto.display_order != null && { display_order: dto.display_order }),
+            ...(secureUrl && { image_url: secureUrl }),
+        };
     }
 
-    private validateRenewalPeriod(
-        strategy: RenewalStrategy,
-        period?: number,
-    ) {
-        if (strategy === RenewalStrategy.automatic) {
-            if (!period) {
-                this.logger.error(
-                    'Missing renewal_period for automatic strategy',
-                );
-                throw new BadRequestException('renewal_period is required');
-            }
-            if (![30, 60, 90].includes(period)) {
-                this.logger.error(`Invalid renewal_period: ${period}`);
-                throw new BadRequestException(
-                    'renewal_period must be 30, 60, or 90',
-                );
-            }
-        }
-    }
-
-    private async getPositionOrFail(id: number) {
-        const position = await this.prisma.position.findUnique({
-            where: { id },
-        });
-        if (!position) {
-            this.logger.error(`Position with id ${id} not found`);
-            throw new BadRequestException('Position not found');
-        }
-        return position;
-    }
-
-    private async validateBannerCount(
-        positionId: number,
-        start: Date,
-        max: number,
-        excludeId?: string,
-    ) {
-        const count = await this.prisma.banner.count({
-            where: {
-                position_id: positionId,
-                OR: [
-                    { end_date: null },
-                    { end_date: { gte: start } },
-                ],
-                NOT: excludeId ? { id: excludeId } : undefined,
-            },
-        });
-        if (count >= max) {
-            this.logger.error(
-                `Banner limit reached for position ${positionId} (max=${max})`,
-            );
-            throw new BadRequestException(
-                'Max active banners reached for this position',
-            );
-        }
-    }
-
-    /**
-     * Ahora acepta `order` siempre como number,
-     * y permite pasar `undefined` desde validateCreate.
-     */
-    private async validateDisplayOrderIfNeeded(
-        order: number | undefined,
-        maxBanners: number,
-        excludeId?: string,
-    ) {
-        if (maxBanners <= 1) return;
-
-        if (order == null) {
-            this.logger.error('display_order is required but not provided');
-            throw new BadRequestException(
-                'display_order is required when position allows multiple banners',
-            );
-        }
-
-        if (order <= 0 || order > maxBanners) {
-            this.logger.error(
-                `display_order out of range: received=${order}, max=${maxBanners}`,
-            );
-            throw new BadRequestException(
-                `display_order must be between 1 and ${maxBanners}`,
-            );
-        }
-
-        const conflict = await this.prisma.banner.findFirst({
-            where: {
-                display_order: order,
-                position: { max_banners: maxBanners },
-                NOT: excludeId ? { id: excludeId } : undefined,
-            },
-        });
-        if (conflict) {
-            this.logger.error(
-                `display_order ${order} already used in position with max_banners=${maxBanners}`,
-            );
-            throw new BadRequestException(
-                `display_order ${order} already used in this position`,
-            );
-        }
-    }
-
-    private async getStartDateFromDB(id: string) {
-        const banner = await this.prisma.banner.findUnique({
-            where: { id },
-            select: { start_date: true },
-        });
-        return banner?.start_date ?? new Date();
-    }
 }

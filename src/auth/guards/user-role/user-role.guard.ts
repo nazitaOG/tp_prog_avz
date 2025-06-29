@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, ForbiddenException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { Reflector } from '@nestjs/core';
-import { UserWithRoles } from 'src/prisma/interfaces/user-with-role.interface';
+import { UserWithRoles } from 'src/common/prisma/interfaces/user-with-role.interface';
 import { META_ROLES } from '../../decorators/role-protected.decorator';
 
 @Injectable()

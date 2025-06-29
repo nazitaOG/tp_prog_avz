@@ -4,7 +4,7 @@ import { ApiProperty } from "@nestjs/swagger";
 
 export class PaginationDto {
     @ApiProperty({
-        default:3,
+        default:10,
         description: 'The number of items to return',
         required: false,
     })

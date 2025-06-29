@@ -7,10 +7,12 @@ export class UserIdentifierDto {
         description: 'ONLY FOR ADMIN: The identifier of the user (id or email)',
         example: 'user@example.com',
     })
+    @Transform(({ value }) =>
+        typeof value === 'string'
+            ? value.toLowerCase().replaceAll(' ', '').replaceAll("'", '')
+            : value
+    )
     @IsString()
     @IsNotEmpty()
-    @Transform(({ value }) =>
-        value.toLowerCase().replaceAll(' ', '').replaceAll("'", '')
-    )
     term: string;
 }

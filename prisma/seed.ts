@@ -7,7 +7,7 @@ async function main() {
 
     if (process.env.NODE_ENV !== 'development') {
         console.error(
-            '⛔️ Seeding solo permitido en development. NODE_ENV=',
+            'Seeding only allowed in development. NODE_ENV=',
             process.env.NODE_ENV
         );
         process.exit(1);
@@ -141,18 +141,49 @@ async function main() {
     await prisma.banner.create({
         data: {
             image_url: 'https://example.com/banner.jpg',
-            destination_link: 'https://cliente.com',
+            destination_link: 'https://adidas.com',
             start_date: new Date(),
             renewal_strategy: RenewalStrategy.manual,
             user_id: adminUser.id,
             position_id: encabezado.id, // 🔧 Corregido
         },
     });
+
+    // Create expiring banner
+    const expiringDate = new Date();
+    expiringDate.setDate(expiringDate.getDate() + 3);
+
+    await prisma.banner.create({
+        data: {
+            image_url: 'https://example.com/banner2.jpg',
+            destination_link: 'https://adidas.com',
+            start_date: new Date(),
+            end_date: expiringDate,
+            renewal_strategy: RenewalStrategy.manual,
+            user_id: advertiserUser.id,
+            position_id: flotante_principal.id,
+        },
+    });
+
+    const expiredDate = new Date();
+    expiredDate.setDate(expiredDate.getDate() - 1);
+
+    await prisma.banner.create({
+        data: {
+            image_url: 'https://example.com/banner3.jpg',
+            destination_link: 'https://adidas.com',
+            start_date: new Date(),
+            end_date: expiredDate,
+            renewal_strategy: RenewalStrategy.manual,
+            user_id: advertiserUser.id,
+            position_id: pie.id,
+        },
+    });
 }
 
 main()
     .catch((e) => {
-        console.error('❌ Error in seed:', e);
+        console.error('Error in seed:', e);
         process.exit(1);
     })
     .finally(() => {

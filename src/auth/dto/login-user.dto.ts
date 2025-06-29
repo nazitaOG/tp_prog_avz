@@ -1,6 +1,6 @@
 import { Transform } from "class-transformer";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsNotEmpty, IsString, IsLowercase} from "class-validator";
+import { IsEmail, IsNotEmpty, IsString, IsLowercase } from "class-validator";
 
 export class LoginUserDto {
 
@@ -8,13 +8,15 @@ export class LoginUserDto {
         description: 'The email of the user',
         example: 'user@example.com',
     })
+    @Transform(({ value }) =>
+        typeof value === 'string'
+            ? value.toLowerCase().replaceAll(' ', '').replaceAll("'", '')
+            : value
+    )
     @IsEmail()
     @IsNotEmpty()
     @IsString()
     @IsLowercase()
-    @Transform(({ value }) =>
-        value.toLowerCase().replaceAll(' ', '').replaceAll("'", '')
-    )
     email: string;
 
     @ApiProperty({

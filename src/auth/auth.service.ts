@@ -1,13 +1,13 @@
 import { ForbiddenException, Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { handleRequest } from 'src/utils/hadle-request/handle-request';
+import { PrismaService } from 'src/common/prisma/prisma.service';
+import { handleRequest } from 'src/common/utils/hadle-request/handle-request';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
-import { JwtPayload } from './interfaces/payload.interface';
+import { JwtPayload } from './interfaces/jwt-payload.interface';
 import { ValidRoles } from './interfaces/valid-roles.interface';
-import { UserWithRoles } from 'src/prisma/interfaces/user-with-role.interface';
+import { UserWithRoles } from 'src/common/prisma/interfaces/user-with-role.interface';
 
 @Injectable()
 export class AuthService {

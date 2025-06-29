@@ -1,6 +1,6 @@
 import { ApiPropertyOptional, PartialType } from '@nestjs/swagger';
 import { CreateUserDto } from './create-user.dto';
-import { AtLeastOneField } from 'src/validators/at-least-one-field';
+import { AtLeastOneField } from 'src/common/validators/at-least-one-field';
 
 
 @AtLeastOneField(['name', 'email', 'password', 'roles'], {

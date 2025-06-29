@@ -62,6 +62,7 @@ model Banner {
   renewal_strategy RenewalStrategy
   renewal_period   Int?            @db.SmallInt
   display_order    Int?            @db.SmallInt
+  notified         Boolean      @default(false)
 
   user     User     @relation("UserToBanner", fields: [user_id], references: [id], onDelete: Cascade)
   position Position @relation(fields: [position_id], references: [id], onDelete: Restrict)

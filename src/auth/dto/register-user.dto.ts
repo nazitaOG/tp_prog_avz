@@ -8,12 +8,14 @@ export class RegisterUserDto {
         example: 'John Doe',
         default: null,
     })
+    @Transform(({ value }) =>
+        typeof value === 'string'
+            ? value.trim().toLowerCase()
+            : value
+    )
     @IsOptional()
     @IsString()
     @MinLength(3)
-    @Transform(({ value }) =>
-        value.toLowerCase().replaceAll(' ', '').replaceAll("'", '')
-    )
     name?: string;
 
     @ApiProperty({
@@ -21,13 +23,16 @@ export class RegisterUserDto {
         example: 'test@test.com',
         default: 'user@example.com',
     })
+    @Transform(({ value }) =>
+        typeof value === 'string'
+            ? value.toLowerCase().replaceAll(' ', '').replaceAll("'", '')
+            : value
+    )
     @IsEmail()
     @IsNotEmpty()
     @IsString()
     @IsLowercase()
-    @Transform(({ value }) =>
-        value.toLowerCase().replaceAll(' ', '').replaceAll("'", '')
-    )
+
     email: string;
 
     @ApiProperty({

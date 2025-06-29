@@ -1,6 +1,6 @@
-import { OmitType, PartialType } from '@nestjs/mapped-types';
+import { PartialType } from '@nestjs/swagger';
 import { CreateBannerDto } from './create-banner.dto';
-import { AtLeastOneField } from 'src/validators/at-least-one-field';
+import { AtLeastOneField } from 'src/common/validators/at-least-one-field';
 
 
 export class UpdateBannerDto extends PartialType(CreateBannerDto) { }
