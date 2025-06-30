@@ -1,4 +1,3 @@
-// test/e2e/banners/update-banners-e2e-spec.ts
 import { Test, TestingModule } from '@nestjs/testing';
 import {
     INestApplication,
@@ -18,9 +17,10 @@ describe('BannersModule Update Banner (e2e)', () => {
     let adminToken: string;
     let advBannerId: string;
     let adminBannerId: string;
+    let now: Date;
+    let tomorrow: Date;
 
     beforeAll(async () => {
-        // Silenciar Logger
         jest
             .spyOn(require('@nestjs/common').Logger.prototype, 'log')
             .mockImplementation(() => { });
@@ -57,32 +57,27 @@ describe('BannersModule Update Banner (e2e)', () => {
             }),
         );
         await app.init();
-        const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
+        const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
         await delay(200 + Math.random() * 900);
 
-        // Login advertiser
-        {
-            const res = await request(app.getHttpServer())
-                .post('/auth/login')
-                .send({ email: 'advertiser@example.com', password: 'advertiser123' });
-            advToken = res.body.token;
-        }
+        const resAdv = await request(app.getHttpServer())
+            .post('/auth/login')
+            .send({ email: 'advertiser@example.com', password: 'advertiser123' });
+        advToken = resAdv.body.token;
 
-        // Login admin
-        {
-            const res = await request(app.getHttpServer())
-                .post('/auth/login')
-                .send({ email: 'admin@example.com', password: 'admin123' });
-            adminToken = res.body.token;
-        }
+        const resAdmin = await request(app.getHttpServer())
+            .post('/auth/login')
+            .send({ email: 'admin@example.com', password: 'admin123' });
+        adminToken = resAdmin.body.token;
 
-        // Crear banner del advertiser para pruebas
         const advUser = await prisma.user.findFirst({
             where: { email: 'advertiser@example.com' },
         });
         if (!advUser) throw new Error('Advertiser user not found');
-        const now = new Date();
-        const tomorrow = new Date(now.getTime() + 24 * 3600 * 1000);
+
+        now = new Date();
+        tomorrow = new Date(now.getTime() + 24 * 3600 * 1000);
+
         const advBanner = await prisma.banner.create({
             data: {
                 image_url: 'http://orig.img',
@@ -91,26 +86,26 @@ describe('BannersModule Update Banner (e2e)', () => {
                 end_date: tomorrow,
                 renewal_strategy: 'manual',
                 user_id: advUser.id,
-                position_id: 4,     // lateral_derecho (max_banners=3)
+                position_id: 4,
                 display_order: 1,
             },
         });
         advBannerId = advBanner.id;
 
-        // Tomar un banner creado por el admin en el seed
         const adminUser = await prisma.user.findFirst({
             where: { email: 'admin@example.com' },
         });
         if (!adminUser) throw new Error('Admin user not found');
+
         const adminBanner = await prisma.banner.findFirst({
             where: { user_id: adminUser.id },
         });
         if (!adminBanner) throw new Error('Admin banner not found');
+
         adminBannerId = adminBanner.id;
     });
 
     afterAll(async () => {
-        // Limpiar banner del advertiser
         await prisma.banner.delete({ where: { id: advBannerId } });
         await app.close();
     });
@@ -153,8 +148,12 @@ describe('BannersModule Update Banner (e2e)', () => {
             .set('Authorization', `Bearer ${advToken}`)
             .send({
                 destination_link: newLink,
-                display_order: 1,  // necesario para posiciones con max_banners>1
+                display_order: 1,
+                start_date: now.toISOString(),
+                end_date: tomorrow.toISOString(),
+                renewal_strategy: 'manual',
             });
+        console.log(res.body);
         expect(res.status).toBe(HttpStatus.OK);
         expect(res.body.destination_link).toBe(newLink);
     });
@@ -179,7 +178,11 @@ describe('BannersModule Update Banner (e2e)', () => {
             .set('Authorization', `Bearer ${adminToken}`)
             .attach('file', Buffer.from('img'), 'update.png')
             .field('destination_link', 'https://admin.updated')
-            .field('display_order', '2');
+            .field('display_order', 2)
+            .field('start_date', now.toISOString())
+            .field('end_date', tomorrow.toISOString())
+            .field('renewal_strategy', 'manual');
+
         expect(res.status).toBe(HttpStatus.OK);
         expect(res.body.destination_link).toBe('https://admin.updated');
         expect(res.body.image_url).toBe('http://new.img');
@@ -214,7 +217,9 @@ describe('BannersModule Update Banner (e2e)', () => {
             .set('Authorization', `Bearer ${adminToken}`)
             .attach('file', Buffer.from('img'), 'f.png')
             .field('end_date', yesterday)
-            .field('display_order', '2');
+            .field('display_order', 2)
+            .field('start_date', now.toISOString())
+            .field('renewal_strategy', 'manual');
 
         expect(res.status).toBe(HttpStatus.BAD_REQUEST);
         expect(

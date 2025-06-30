@@ -12,32 +12,23 @@ describe('BannersModule Create (e2e)', () => {
     let prisma: PrismaService;
     const bannerDto = {
         destination_link: 'https://example.com',
-        position_id: 4, // lateral_derecho (max_banners=3)
+        position_id: 4,
         renewal_strategy: 'manual',
         display_order: 1,
     };
     const createdIds: string[] = [];
 
     beforeAll(async () => {
-        // Silenciar todo Logger para que no imprima nada en consola
-        jest
-            .spyOn(require('@nestjs/common').Logger.prototype, 'log')
-            .mockImplementation(() => { });
-        jest
-            .spyOn(require('@nestjs/common').Logger.prototype, 'error')
-            .mockImplementation(() => { });
-        jest
-            .spyOn(require('@nestjs/common').Logger.prototype, 'warn')
-            .mockImplementation(() => { });
+        jest.spyOn(require('@nestjs/common').Logger.prototype, 'log').mockImplementation(() => {});
+        jest.spyOn(require('@nestjs/common').Logger.prototype, 'error').mockImplementation(() => {});
+        jest.spyOn(require('@nestjs/common').Logger.prototype, 'warn').mockImplementation(() => {});
 
         const moduleFixture: TestingModule = await Test.createTestingModule({
             imports: [AppModule],
         })
             .overrideProvider(FilesService)
             .useValue({
-                uploadImage: jest
-                    .fn()
-                    .mockResolvedValue({ secure_url: 'http://img.url', public_id: 'pub123' }),
+                uploadImage: jest.fn().mockResolvedValue({ secure_url: 'http://img.url', public_id: 'pub123' }),
                 deleteImage: jest.fn(),
             })
             .compile();
@@ -57,13 +48,11 @@ describe('BannersModule Create (e2e)', () => {
         const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
         await delay(200 + Math.random() * 1200);
 
-        // login admin
         const resAdmin = await request(app.getHttpServer())
             .post('/auth/login')
             .send({ email: 'admin@example.com', password: 'admin123' });
         adminToken = resAdmin.body.token;
 
-        // login advertiser
         const resAdv = await request(app.getHttpServer())
             .post('/auth/login')
             .send({ email: 'advertiser@example.com', password: 'advertiser123' });
@@ -71,7 +60,6 @@ describe('BannersModule Create (e2e)', () => {
     });
 
     afterAll(async () => {
-        // cleanup created banners
         await Promise.all(
             createdIds.map(id => prisma.banner.delete({ where: { id } })),
         );
@@ -92,6 +80,7 @@ describe('BannersModule Create (e2e)', () => {
         const token = resUser.body.token;
 
         const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+        const now = new Date().toISOString();
         const res = await request(app.getHttpServer())
             .post('/banners')
             .set('Authorization', `Bearer ${token}`)
@@ -100,6 +89,7 @@ describe('BannersModule Create (e2e)', () => {
             .field('position_id', String(bannerDto.position_id))
             .field('renewal_strategy', bannerDto.renewal_strategy)
             .field('display_order', String(bannerDto.display_order))
+            .field('start_date', now)
             .field('end_date', tomorrow);
 
         expect(res.status).toBe(HttpStatus.FORBIDDEN);
@@ -107,6 +97,7 @@ describe('BannersModule Create (e2e)', () => {
 
     it('POST /banners - admin missing file → 400', async () => {
         const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+        const now = new Date().toISOString();
         const res = await request(app.getHttpServer())
             .post('/banners')
             .set('Authorization', `Bearer ${adminToken}`)
@@ -114,6 +105,7 @@ describe('BannersModule Create (e2e)', () => {
             .field('position_id', String(bannerDto.position_id))
             .field('renewal_strategy', bannerDto.renewal_strategy)
             .field('display_order', String(bannerDto.display_order))
+            .field('start_date', now)
             .field('end_date', tomorrow);
 
         expect(res.status).toBe(HttpStatus.BAD_REQUEST);
@@ -122,15 +114,17 @@ describe('BannersModule Create (e2e)', () => {
 
     it('POST /banners - advertiser with file → 201', async () => {
         const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+
         const res = await request(app.getHttpServer())
             .post('/banners')
             .set('Authorization', `Bearer ${advToken}`)
             .attach('file', Buffer.from('fake'), 'banner.png')
             .field('destination_link', bannerDto.destination_link)
             .field('position_id', String(bannerDto.position_id))
-            .field('renewal_strategy', bannerDto.renewal_strategy)
+            .field('renewal_strategy', 'manual')
             .field('display_order', String(bannerDto.display_order))
-            .field('end_date', tomorrow);
+            .field('end_date', tomorrow)
+            .field('start_date', new Date().toISOString());
 
         expect(res.status).toBe(HttpStatus.CREATED);
         expect(res.body).toHaveProperty('id');
@@ -148,7 +142,6 @@ describe('BannersModule Create (e2e)', () => {
             public_id: 'to-delete',
         });
 
-        // manual strategy without end_date → error de validación
         const res = await request(app.getHttpServer())
             .post('/banners')
             .set('Authorization', `Bearer ${adminToken}`)
@@ -159,7 +152,6 @@ describe('BannersModule Create (e2e)', () => {
             .field('display_order', String(bannerDto.display_order));
 
         expect(res.status).toBe(HttpStatus.BAD_REQUEST);
-        // comprobar que borró la imagen "to-delete"
         expect(
             (filesSvc.deleteImage as jest.Mock).mock.calls.some(
                 call => call[0] === 'to-delete',

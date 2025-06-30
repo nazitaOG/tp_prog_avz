@@ -1,4 +1,3 @@
-// src/files/helpers/fileFilter.helper.ts
 import { Request } from 'express';
 import { BadRequestException } from '@nestjs/common';
 

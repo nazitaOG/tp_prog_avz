@@ -1,4 +1,3 @@
-// test/banners.module.spec.ts
 import { Test, TestingModule } from '@nestjs/testing';
 import { BannersModule } from 'src/banners/banners.module';
 import { BannersService } from 'src/banners/banners.service';

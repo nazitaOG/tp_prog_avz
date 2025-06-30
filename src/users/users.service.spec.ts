@@ -1,4 +1,3 @@
-// test/unit/users.service.spec.ts
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from './users.service';
 import { PrismaService } from 'src/common/prisma/prisma.service';
@@ -11,7 +10,6 @@ import {
 import { UserWithRoles } from 'src/common/prisma/interfaces/user-with-role.interface';
 import { ValidRoles } from 'src/auth/interfaces/valid-roles.interface';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { isUUID } from 'class-validator';
 

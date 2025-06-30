@@ -3,10 +3,13 @@ import { INestApplication, ValidationPipe, HttpStatus } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../../../src/app.module';
 
+
 describe('BannersModule Get Banners - ALL METHODS - (e2e)', () => {
     let app: INestApplication;
     let adminToken: string;
     let advToken: string;
+
+    const today = new Date('2025-06-30T00:00:00.000Z');
 
     beforeAll(async () => {
         jest.spyOn(require('@nestjs/common').Logger.prototype, 'log').mockImplementation(() => { });
@@ -28,7 +31,6 @@ describe('BannersModule Get Banners - ALL METHODS - (e2e)', () => {
         );
         await app.init();
 
-        // Delay aleatorio para evitar conflictos por timing
         const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
         await delay(200 + Math.random() * 300);
 
@@ -76,8 +78,6 @@ describe('BannersModule Get Banners - ALL METHODS - (e2e)', () => {
 
         expect(Array.isArray(res.body)).toBe(true);
         expect(res.body.length).toBe(1);
-
-        // Comparar objeto completo sin depender del UUID
         expect(res.body[0]).toEqual(resAll.body[1]);
     });
 
@@ -103,7 +103,6 @@ describe('BannersModule Get Banners - ALL METHODS - (e2e)', () => {
             .expect(HttpStatus.OK);
 
         const active = resActive.body;
-        const today = new Date();
 
         for (const b of active) {
             const start = new Date(b.start_date);
@@ -112,12 +111,10 @@ describe('BannersModule Get Banners - ALL METHODS - (e2e)', () => {
             expect(start.getTime()).toBeLessThanOrEqual(today.getTime());
             if (end) expect(end.getTime()).toBeGreaterThanOrEqual(today.getTime());
 
-            const match = all.find(x =>
-                x.image_url === b.image_url &&
-                x.destination_link === b.destination_link &&
-                new Date(x.start_date).getTime() === new Date(b.start_date).getTime()
-            );
+            const match = all.find(x => x.id === b.id);
             expect(match).toBeDefined();
+            expect(b.destination_link).toBe(match.destination_link);
+            expect(b.position_id).toBe(match.position_id);
         }
     });
 

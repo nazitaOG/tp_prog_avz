@@ -1,4 +1,3 @@
-// src/auth/auth.module.spec.ts
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthModule } from './auth.module';
 import { AuthService } from './auth.service';

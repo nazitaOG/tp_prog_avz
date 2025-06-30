@@ -1,6 +1,5 @@
 import { Controller, Post, UseInterceptors, UploadedFile, Body, ParseUUIDPipe, Patch, Param, Get, Delete, Query } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { User } from '@prisma/client';
 import { ApiTags } from '@nestjs/swagger';
 import { UpdateBannerDto } from './dto/update-banner.dto';
 import { BannersService } from './banners.service';
