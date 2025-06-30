@@ -55,6 +55,9 @@ pnpm run start:dev
 pnpm run start:prod
 ```
 
+### 6. Correr en modo .prod 
+```docker-compose -f docker-compose.prod.yaml up --build -d```
+
 ## Justificacion del cambio en la tabla Banner
 
 Agregué un flag notified en la tabla Banner (por defecto false) para saber cuándo ya le avisamos al usuario que faltan 3 días para que su banner entre en vigencia. La otra opción habría sido usar Bull y Redis para programar jobs retrasados, pero para este proyecto ligero un cron interno es más que suficiente: se configura en un segundo, corre junto a la app y no requiere levantar dependencias extra como Redis.
