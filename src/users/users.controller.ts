@@ -14,7 +14,7 @@ import swaggerDecorators from './decorators/swagger';
 @ApiTags('Users')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) { }
 
   @Post()
   @Auth(ValidRoles.admin)
@@ -38,18 +38,46 @@ export class UsersController {
     return this.usersService.findOne(dto.term);
   }
 
-
-  @Patch(':term')
+  // self-update
+  @Patch()
   @Auth(ValidRoles.admin, ValidRoles.advertiser, ValidRoles.user)
   @swaggerDecorators.ApiUpdateUser()
-  update(@Param() identifierDto: UserIdentifierDto, @Body() updateUserDto: UpdateUserDto, @GetUser() user: UserWithRoles) {
-    return this.usersService.update(identifierDto.term, updateUserDto, user);
+  updateSelf(
+    @Body() updateUserDto: UpdateUserDto,
+    @GetUser() userWithRoles: UserWithRoles,
+  ) {
+    return this.usersService.update(updateUserDto, userWithRoles);
   }
 
-  @Delete(':term')
+  // admin-update others
+  @Patch(':term')
+  @Auth(ValidRoles.admin)
+  @swaggerDecorators.ApiUpdateUser()
+  updateOther(
+    @Param() identifierDto: UserIdentifierDto,
+    @Body() updateUserDto: UpdateUserDto,
+    @GetUser() userWithRoles: UserWithRoles,
+  ) {
+    return this.usersService.update(updateUserDto, userWithRoles, identifierDto.term);
+  }
+
+  // self-delete
+  @Delete()
   @Auth(ValidRoles.admin, ValidRoles.advertiser, ValidRoles.user)
   @swaggerDecorators.ApiDeleteUser()
-  remove(@Param() identifierDto: UserIdentifierDto, @GetUser() user: UserWithRoles) {
-    return this.usersService.remove(identifierDto.term, user);
+  removeSelf(@GetUser() userWithRoles: UserWithRoles) {
+    return this.usersService.remove(userWithRoles);
   }
+
+  // admin-delete others
+  @Delete(':term')
+  @Auth(ValidRoles.admin)
+  @swaggerDecorators.ApiDeleteUser()
+  removeOther(
+    @Param() identifierDto: UserIdentifierDto,
+    @GetUser() userWithRoles: UserWithRoles,
+  ) {
+    return this.usersService.remove(userWithRoles, identifierDto.term);
+  }
+
 }

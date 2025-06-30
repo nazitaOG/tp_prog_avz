@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { MailService } from './mail.service';
 import { MailerService } from '@nestjs-modules/mailer';
-import { Logger } from '@nestjs/common';
 import { handleRequest } from '../common/utils/hadle-request/handle-request';
 
 jest.mock('../common/utils/hadle-request/handle-request');

@@ -5,7 +5,6 @@ import { PrismaService } from 'src/common/prisma/prisma.service';
 import { handleRequest } from 'src/common/utils/hadle-request/handle-request';
 import { BannerValidator } from './validations/banner.validator';
 import { FilesService } from 'src/files/files.service';
-import { Prisma, User } from '@prisma/client';
 import { UserWithRoles } from 'src/common/prisma/interfaces/user-with-role.interface';
 import { ValidRoles } from 'src/auth/interfaces/valid-roles.interface';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
@@ -117,7 +116,7 @@ export class BannersService {
           data: validData
         });
       } catch (err) {
-        // 6) Si falló y hubo subida, hago rollback de la imagen
+        // rollback image if upload failed
         if (public_id) {
           await this.filesService.deleteImage(public_id);
         }

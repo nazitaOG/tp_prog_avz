@@ -1,18 +1,18 @@
 import { PrismaClient, RenewalStrategy } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('DATABASE_URL:', process.env.DATABASE_URL);
+
 const prisma = new PrismaClient();
 
 async function main() {
-
-    if (process.env.NODE_ENV !== 'development') {
-        console.error(
-            'Seeding only allowed in development. NODE_ENV=',
-            process.env.NODE_ENV
-        );
+    if (!['development'].includes(process.env.NODE_ENV || '')) {
+        console.error('Seeding only allowed in development or test. NODE_ENV=', process.env.NODE_ENV);
         process.exit(1);
     }
-    // Delete all data respecting relationships (from child to parent)
+
+    // Eliminar datos respetando relaciones
     await prisma.banner.deleteMany();
     await prisma.userRole.deleteMany();
     await prisma.rolePermission.deleteMany();
@@ -25,18 +25,17 @@ async function main() {
     await prisma.$executeRawUnsafe(`ALTER SEQUENCE "Permission_id_seq" RESTART WITH 1`);
     await prisma.$executeRawUnsafe(`ALTER SEQUENCE "Position_id_seq" RESTART WITH 1`);
 
-    // Create roles
+    // Roles
     const adminRole = await prisma.role.create({ data: { name: 'admin' } });
     const advertiserRole = await prisma.role.create({ data: { name: 'advertiser' } });
     const userRole = await prisma.role.create({ data: { name: 'user' } });
 
-    // Create permissions
+    // Permisos
     const permissions = ['create_banner', 'delete_user', 'view_reports', 'read_only'];
     for (const name of permissions) {
         await prisma.permission.create({ data: { name } });
     }
 
-    // Assign all permissions to admin
     const allPermissions = await prisma.permission.findMany();
     for (const permission of allPermissions) {
         await prisma.rolePermission.create({
@@ -47,7 +46,6 @@ async function main() {
         });
     }
 
-    // Assign one permission to advertiser
     const createBannerPermission = await prisma.permission.findFirst({ where: { name: 'create_banner' } });
     if (createBannerPermission) {
         await prisma.rolePermission.create({
@@ -58,7 +56,6 @@ async function main() {
         });
     }
 
-    // Assign one permission to user
     const readOnlyPermission = await prisma.permission.findFirst({ where: { name: 'read_only' } });
     if (readOnlyPermission) {
         await prisma.rolePermission.create({
@@ -69,7 +66,7 @@ async function main() {
         });
     }
 
-    // Create positions
+    // Posiciones
     const flotante_principal = await prisma.position.create({
         data: { name: 'flotante principal', max_banners: 1 },
     });
@@ -86,7 +83,7 @@ async function main() {
         data: { name: 'lateral derecho', max_banners: 3 },
     });
 
-    // Create admin user
+    // Usuarios
     const password = await bcrypt.hash('admin123', 10);
     const adminUser = await prisma.user.create({
         data: {
@@ -95,15 +92,8 @@ async function main() {
             hashed_password: password,
         },
     });
+    await prisma.userRole.create({ data: { user_id: adminUser.id, role_id: adminRole.id } });
 
-    await prisma.userRole.create({
-        data: {
-            user_id: adminUser.id,
-            role_id: adminRole.id,
-        },
-    });
-
-    // Create advertiser user
     const advertiserPassword = await bcrypt.hash('advertiser123', 10);
     const advertiserUser = await prisma.user.create({
         data: {
@@ -112,15 +102,8 @@ async function main() {
             hashed_password: advertiserPassword,
         },
     });
+    await prisma.userRole.create({ data: { user_id: advertiserUser.id, role_id: advertiserRole.id } });
 
-    await prisma.userRole.create({
-        data: {
-            user_id: advertiserUser.id,
-            role_id: advertiserRole.id,
-        },
-    });
-
-    // Create regular user
     const userPassword = await bcrypt.hash('user123', 10);
     const normalUser = await prisma.user.create({
         data: {
@@ -129,15 +112,9 @@ async function main() {
             hashed_password: userPassword,
         },
     });
+    await prisma.userRole.create({ data: { user_id: normalUser.id, role_id: userRole.id } });
 
-    await prisma.userRole.create({
-        data: {
-            user_id: normalUser.id,
-            role_id: userRole.id,
-        },
-    });
-
-    // Create test banner
+    // Banners
     await prisma.banner.create({
         data: {
             image_url: 'https://example.com/banner.jpg',
@@ -145,14 +122,12 @@ async function main() {
             start_date: new Date(),
             renewal_strategy: RenewalStrategy.manual,
             user_id: adminUser.id,
-            position_id: encabezado.id, // 🔧 Corregido
+            position_id: encabezado.id,
         },
     });
 
-    // Create expiring banner
     const expiringDate = new Date();
     expiringDate.setDate(expiringDate.getDate() + 3);
-
     await prisma.banner.create({
         data: {
             image_url: 'https://example.com/banner2.jpg',
@@ -167,7 +142,6 @@ async function main() {
 
     const expiredDate = new Date();
     expiredDate.setDate(expiredDate.getDate() - 1);
-
     await prisma.banner.create({
         data: {
             image_url: 'https://example.com/banner3.jpg',

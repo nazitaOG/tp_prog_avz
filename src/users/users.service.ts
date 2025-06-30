@@ -17,41 +17,56 @@ export class UsersService {
   constructor(private readonly prisma: PrismaService) { }
 
   create(createUserDto: CreateUserDto, userWithRoles: UserWithRoles) {
-    return handleRequest(async () => {
+    return handleRequest(
+      async () => {
+        const isAdmin = userWithRoles.roles.some(
+          (r) => r.role_id === ValidRoles.admin,
+        );
+        if (!isAdmin) {
+          throw new ForbiddenException(
+            'Esta ruta solo la puede usar el admin',
+          );
+        }
 
-      const roles = createUserDto.roles?.length ? createUserDto.roles : ['user'];
-      if (
-        !userWithRoles.roles.some(r => r.role_id === ValidRoles.admin) &&
-        roles.some(r => r === 'admin' || r === 'advertiser')
-      ) {
-        throw new ForbiddenException('You are not authorized to assign admin or advertiser');
-      }
+        const roles =
+          createUserDto.roles && createUserDto.roles.length > 0
+            ? createUserDto.roles
+            : ['user'];
 
+        const hashed_password = await bcrypt.hash(
+          createUserDto.password,
+          10,
+        );
 
-      const hashed_password = await bcrypt.hash(createUserDto.password, 10);
+        const name =
+          createUserDto.name ??
+          createUserDto.email.split('@')[0];
 
-      const name = createUserDto.name ?? createUserDto.email.split('@')[0];
+        const user = await this.prisma.user.create({
+          data: {
+            name,
+            email: createUserDto.email,
+            hashed_password,
+            roles: {
+              create: roles.map((roleName) => ({
+                role: { connect: { name: roleName } },
+              })),
+            },
+          },
+          include: {
+            roles: {
+              include: { role: true },
+            },
+          },
+        });
 
-      const user = await this.prisma.user.create({
-        data: {
-          name: name,
-          email: createUserDto.email,
-          hashed_password,
-          roles: {
-            create: roles.map(roleName => ({
-              role: {
-                connect: { name: roleName }
-              }
-            }))
-          }
-        },
-      });
-
-      const { hashed_password: _, ...userWithoutPassword } = user;
-
-      return { user: userWithoutPassword };
-
-    }, 'Failed to create user', this.logger);
+        const { hashed_password: _, ...userWithoutPassword } =
+          user;
+        return { user: userWithoutPassword };
+      },
+      'Failed to create user',
+      this.logger,
+    );
   }
 
   findAll(paginationDto: PaginationDto) {
@@ -75,8 +90,13 @@ export class UsersService {
     );
   }
 
-  findOne(term: string) {
+  findOne(term?: string) {
     return handleRequest(async () => {
+      if (!term) {
+        this.logger.error('No term provided');
+        throw new BadRequestException('No term provided');
+      }
+
       const isId = isUUID(term);
 
       const user = await this.prisma.user.findUnique({
@@ -94,122 +114,127 @@ export class UsersService {
   }
 
   async update(
-    term: string,
     dto: UpdateUserDto,
     user: UserWithRoles,
+    term?: string,
   ) {
-    return handleRequest(async () => {
-      const isAdmin = user.roles.some(r => r.role_id === ValidRoles.admin);
-      const { roles: dtoRoles, password, ...restDto } = dto;
-
-      // Only admin can change roles
-      if (!isAdmin && dtoRoles) {
-        throw new ForbiddenException('You are not authorized to change roles');
-      }
-
-      if (!isAdmin && term.length === 0) {
-        throw new BadRequestException('You must provide an id or email if you are not admin');
-      }
-
-      let hashed: string | undefined;
-      if (password) {
-        hashed = await bcrypt.hash(password, 10);
-      }
-
-      // no-admin can only update himself
-      if (!isAdmin) {
-        const userUpdated = await this.prisma.user.update({
-          where: { id: user.id },
-          data: {
-            ...restDto,
-            ...(hashed && { hashed_password: hashed }),
-          },
-          include: { roles: true },
-        });
-        const { hashed_password: _, ...userWithoutPassword } = userUpdated;
-        return { user: userWithoutPassword };
-      }
-
-      // admin can only update other users by id or email
-      const isId = isUUID(term);
-      const isEmail = term.includes('@');
-      if (!isId && !isEmail) {
-        throw new BadRequestException('You must provide a valid id or email');
-      }
-      if ((isId && term === user.id) ||
-        (isEmail && term === user.email)) {
-        throw new BadRequestException('Admin cannot update his own account');
-      }
-
-      // admin can update other users by id or email
-      const userUpdated = await this.prisma.user.update({
-        where: isId ? { id: term } : { email: term },
-        data: {
-          ...restDto,
-          ...(hashed && { hashed_password: hashed }),
-          ...(dtoRoles && {
-            roles: {
-              deleteMany: {},
-              create: dtoRoles.map(name => ({
-                role: { connect: { name } }
-              })),
-            },
-          }),
-        },
-        include: { roles: true },
-      });
-
-      const { hashed_password: _, ...userWithoutPassword } = userUpdated;
-
-      return { user: userWithoutPassword };
-
-    }, 'Failed to update user', this.logger);
-  }
-
-
-
-  async remove(term: string, user: UserWithRoles) {
-    const isAdmin = user.roles.some(r => r.role_id === ValidRoles.admin);
-    const isId = isUUID(term);
-    const isEmail = term.includes('@');
-
     return handleRequest(
       async () => {
+        const isAdmin = user.roles.some(r => r.role_id === ValidRoles.admin);
+        const { roles: dtoRoles, password, ...rest } = dto;
 
-        // no-admin can only delete himself
-        if (!isAdmin) {
-          if (term.length === 0) {
-            return this.prisma.user.delete({ where: { id: user.id } });
+        // Self-update: term omitted
+        if (!term) {
+          if (isAdmin) {
+            throw new BadRequestException('Admin cannot update his own account');
           }
-          else {
-            throw new BadRequestException('You must not provide an id or email if you are not admin');
+          // non-admin cannot change roles
+          if (dtoRoles) {
+            throw new ForbiddenException('You are not authorized to change roles');
           }
+          const data: any = { ...rest };
+          if (password) data.hashed_password = await bcrypt.hash(password, 10);
+          const updated = await this.prisma.user.update({
+            where: { id: user.id },
+            data,
+            include: { roles: true },
+          });
+          const { hashed_password: _, ...u } = updated;
+          return { user: u };
         }
 
-        // admin can only delete other users
-        if (!isId && !isEmail) {
+        // term provided: update other
+        if (!isAdmin) {
+          throw new BadRequestException('You must not provide an id or email if you are not admin');
+        }
+        const isTermId = isUUID(term);
+        const isTermEmail = term.includes('@');
+        if (!isTermId && !isTermEmail) {
           throw new BadRequestException('You must provide a valid id or email');
         }
-
-        // admin cant delete himself
-        if ((isId && term === user.id) ||
-          (isEmail && term === user.email)) {
-          throw new ForbiddenException('Admin cannot delete their own account');
+        // cannot target self
+        if (term === user.id || term === user.email) {
+          throw new BadRequestException('Admin cannot update his own account');
         }
-
-        // admin can delete other users by id or email
-        const userDeleted = await this.prisma.user.delete({
-          where: isId ? { id: term } : { email: term },
-          include: { roles: true, banners: true },
+        // handle roles change
+        if (dtoRoles) {
+          const target = await this.prisma.user.findUnique({
+            where: isTermId ? { id: term } : { email: term },
+            include: { roles: true },
+          });
+          if (target?.roles.some(r => r.role_id === ValidRoles.admin)) {
+            throw new ForbiddenException('Cannot change roles of an admin user');
+          }
+        }
+        const data: any = { ...rest };
+        if (password) data.hashed_password = await bcrypt.hash(password, 10);
+        if (dtoRoles) {
+          data.roles = {
+            deleteMany: {},
+            create: dtoRoles.map(name => ({ role: { connect: { name } } })),
+          };
+        }
+        const updated = await this.prisma.user.update({
+          where: isTermId ? { id: term } : { email: term },
+          data,
+          include: { roles: true },
         });
-
-        const { hashed_password: _, ...userWithoutPassword } = userDeleted;
-
-        return { user: userWithoutPassword };
+        const { hashed_password: __, ...u2 } = updated;
+        return { user: u2 };
       },
-
-      'Failed to delete user', this.logger
+      'Failed to update user',
+      this.logger,
     );
   }
 
+  async remove(
+    user: UserWithRoles,
+    term?: string,
+  ) {
+    return handleRequest(
+      async () => {
+        const isAdmin = user.roles.some(r => r.role_id === ValidRoles.admin);
+
+        // Self-delete: term omitted
+        if (!term) {
+          if (isAdmin) {
+            throw new BadRequestException('Admin cannot delete their own account');
+          }
+          await this.prisma.user.delete({ where: { id: user.id } });
+          return;
+        }
+
+        // term provided: delete other
+        if (!isAdmin) {
+          throw new BadRequestException('You must not provide an id or email if you are not admin');
+        }
+        const isTermId = isUUID(term);
+        const isTermEmail = term.includes('@');
+        if (!isTermId && !isTermEmail) {
+          throw new BadRequestException('You must provide a valid id or email');
+        }
+        if (term === user.id || term === user.email) {
+          throw new ForbiddenException('Admin cannot delete their own account');
+        }
+        const targetUser = await this.prisma.user.findUnique({
+          where: isTermId ? { id: term } : { email: term },
+          include: { roles: true },
+        });
+        
+        // para evitar que se borre un admin
+        if (targetUser?.roles.some(r => r.role_id === ValidRoles.admin)) {
+          throw new ForbiddenException('Cannot delete an admin user');
+        }
+        const deleted = await this.prisma.user.delete({
+          where: isTermId ? { id: term } : { email: term },
+          include: { roles: true, banners: true },
+        });
+
+        const { hashed_password: _, ...u } = deleted;
+        return { user: u };
+      },
+      'Failed to delete user',
+      this.logger,
+    );
+  }
 }

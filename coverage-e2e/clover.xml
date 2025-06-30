@@ -1,6 +1,1077 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1751163692115" clover="3.2.0">
-  <project timestamp="1751163692115" name="All files">
-    <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0" elements="0" coveredelements="0" complexity="0" loc="0" ncloc="0" packages="0" files="0" classes="0"/>
+<coverage generated="1751280597685" clover="3.2.0">
+  <project timestamp="1751280597685" name="All files">
+    <metrics statements="792" coveredstatements="634" conditionals="188" coveredconditionals="100" methods="146" coveredmethods="115" elements="1126" coveredelements="849" complexity="0" loc="792" ncloc="792" packages="27" files="66" classes="66"/>
+    <package name="src">
+      <metrics statements="13" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="app.module.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/app.module.ts">
+        <metrics statements="13" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+        <line num="6" count="11" type="stmt"/>
+        <line num="7" count="11" type="stmt"/>
+        <line num="8" count="11" type="stmt"/>
+        <line num="9" count="11" type="stmt"/>
+        <line num="10" count="11" type="stmt"/>
+        <line num="11" count="11" type="stmt"/>
+        <line num="12" count="11" type="stmt"/>
+        <line num="29" count="11" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.auth">
+      <metrics statements="51" coveredstatements="51" conditionals="4" coveredconditionals="3" methods="11" coveredmethods="11"/>
+      <file name="auth.controller.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/auth/auth.controller.ts">
+        <metrics statements="12" coveredstatements="12" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+        <line num="6" count="11" type="stmt"/>
+        <line num="10" count="11" type="stmt"/>
+        <line num="11" count="11" type="stmt"/>
+        <line num="15" count="11" type="stmt"/>
+        <line num="16" count="14" type="stmt"/>
+        <line num="21" count="11" type="stmt"/>
+        <line num="22" count="33" type="stmt"/>
+      </file>
+      <file name="auth.module.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/auth/auth.module.ts">
+        <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+        <line num="6" count="11" type="stmt"/>
+        <line num="7" count="11" type="stmt"/>
+        <line num="8" count="11" type="stmt"/>
+        <line num="20" count="11" type="stmt"/>
+        <line num="28" count="11" type="stmt"/>
+      </file>
+      <file name="auth.service.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/auth/auth.service.ts">
+        <metrics statements="29" coveredstatements="29" conditionals="4" coveredconditionals="3" methods="7" coveredmethods="7"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+        <line num="11" count="11" type="stmt"/>
+        <line num="13" count="11" type="stmt"/>
+        <line num="16" count="11" type="stmt"/>
+        <line num="17" count="11" type="stmt"/>
+        <line num="22" count="14" type="stmt"/>
+        <line num="24" count="14" type="stmt"/>
+        <line num="26" count="14" type="stmt"/>
+        <line num="28" count="14" type="cond" truecount="1" falsecount="1"/>
+        <line num="30" count="14" type="stmt"/>
+        <line num="36" count="14" type="stmt"/>
+        <line num="45" count="13" type="stmt"/>
+        <line num="47" count="13" type="stmt"/>
+        <line num="53" count="33" type="stmt"/>
+        <line num="54" count="33" type="stmt"/>
+        <line num="55" count="33" type="stmt"/>
+        <line num="71" count="33" type="cond" truecount="1" falsecount="0"/>
+        <line num="72" count="1" type="stmt"/>
+        <line num="75" count="32" type="stmt"/>
+        <line num="77" count="32" type="cond" truecount="1" falsecount="0"/>
+        <line num="78" count="2" type="stmt"/>
+        <line num="81" count="30" type="stmt"/>
+        <line num="83" count="30" type="stmt"/>
+        <line num="89" count="43" type="stmt"/>
+        <line num="90" count="43" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.auth.decorators">
+      <metrics statements="17" coveredstatements="16" conditionals="1" coveredconditionals="0" methods="3" coveredmethods="3"/>
+      <file name="auth.decorator.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/auth/decorators/auth.decorator.ts">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="7" count="11" type="stmt"/>
+        <line num="8" count="121" type="stmt"/>
+      </file>
+      <file name="get-user.decorator.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/auth/decorators/get-user.decorator.ts">
+        <metrics statements="7" coveredstatements="6" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="5" count="34" type="stmt"/>
+        <line num="7" count="34" type="cond" truecount="0" falsecount="1"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="11" count="34" type="stmt"/>
+        <line num="14" count="11" type="stmt"/>
+      </file>
+      <file name="role-protected.decorator.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/auth/decorators/role-protected.decorator.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="6" count="11" type="stmt"/>
+        <line num="7" count="121" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.auth.decorators.swagger">
+      <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+      <file name="api-login-auth.decorator.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/auth/decorators/swagger/api-login-auth.decorator.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+      </file>
+      <file name="api-register-auth.decorator.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/auth/decorators/swagger/api-register-auth.decorator.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+      </file>
+      <file name="index.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/auth/decorators/swagger/index.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.auth.dto">
+      <metrics statements="16" coveredstatements="16" conditionals="6" coveredconditionals="3" methods="3" coveredmethods="3"/>
+      <file name="login-user.dto.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/auth/dto/login-user.dto.ts">
+        <metrics statements="7" coveredstatements="7" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+        <line num="12" count="38" type="cond" truecount="1" falsecount="1"/>
+        <line num="20" count="11" type="stmt"/>
+        <line num="28" count="11" type="stmt"/>
+      </file>
+      <file name="register-user.dto.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/auth/dto/register-user.dto.ts">
+        <metrics statements="9" coveredstatements="9" conditionals="4" coveredconditionals="2" methods="2" coveredmethods="2"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+        <line num="12" count="16" type="cond" truecount="1" falsecount="1"/>
+        <line num="19" count="11" type="stmt"/>
+        <line num="27" count="16" type="cond" truecount="1" falsecount="1"/>
+        <line num="36" count="11" type="stmt"/>
+        <line num="46" count="11" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.auth.guards.user-role">
+      <metrics statements="12" coveredstatements="12" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="3"/>
+      <file name="user-role.guard.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/auth/guards/user-role/user-role.guard.ts">
+        <metrics statements="12" coveredstatements="12" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="3"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+        <line num="8" count="11" type="stmt"/>
+        <line num="9" count="22" type="stmt"/>
+        <line num="15" count="56" type="stmt"/>
+        <line num="16" count="56" type="stmt"/>
+        <line num="18" count="56" type="cond" truecount="0" falsecount="1"/>
+        <line num="19" count="56" type="stmt"/>
+        <line num="20" count="72" type="cond" truecount="1" falsecount="0"/>
+        <line num="21" count="48" type="stmt"/>
+        <line num="25" count="8" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.auth.interfaces">
+      <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+      <file name="valid-roles.interface.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/auth/interfaces/valid-roles.interface.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="cond" truecount="2" falsecount="0"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.auth.strategies">
+      <metrics statements="13" coveredstatements="12" conditionals="3" coveredconditionals="1" methods="2" coveredmethods="2"/>
+      <file name="jwt.strategies.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/auth/strategies/jwt.strategies.ts">
+        <metrics statements="13" coveredstatements="12" conditionals="3" coveredconditionals="1" methods="2" coveredmethods="2"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+        <line num="10" count="11" type="stmt"/>
+        <line num="12" count="11" type="stmt"/>
+        <line num="15" count="11" type="stmt"/>
+        <line num="23" count="56" type="stmt"/>
+        <line num="25" count="56" type="stmt"/>
+        <line num="39" count="56" type="cond" truecount="0" falsecount="1"/>
+        <line num="40" count="0" type="stmt"/>
+        <line num="43" count="56" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.banners">
+      <metrics statements="88" coveredstatements="79" conditionals="14" coveredconditionals="9" methods="21" coveredmethods="17"/>
+      <file name="banners.controller.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/banners/banners.controller.ts">
+        <metrics statements="26" coveredstatements="25" conditionals="0" coveredconditionals="0" methods="7" coveredmethods="6"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+        <line num="6" count="11" type="stmt"/>
+        <line num="7" count="11" type="stmt"/>
+        <line num="8" count="11" type="stmt"/>
+        <line num="9" count="11" type="stmt"/>
+        <line num="10" count="11" type="stmt"/>
+        <line num="11" count="11" type="stmt"/>
+        <line num="13" count="11" type="stmt"/>
+        <line num="14" count="11" type="stmt"/>
+        <line num="18" count="11" type="stmt"/>
+        <line num="20" count="11" type="stmt"/>
+        <line num="27" count="11" type="stmt"/>
+        <line num="28" count="3" type="stmt"/>
+        <line num="33" count="11" type="stmt"/>
+        <line num="34" count="10" type="stmt"/>
+        <line num="39" count="11" type="stmt"/>
+        <line num="40" count="2" type="stmt"/>
+        <line num="46" count="11" type="stmt"/>
+        <line num="47" count="6" type="stmt"/>
+        <line num="54" count="11" type="stmt"/>
+        <line num="55" count="4" type="stmt"/>
+        <line num="61" count="11" type="stmt"/>
+        <line num="62" count="0" type="stmt"/>
+      </file>
+      <file name="banners.module.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/banners/banners.module.ts">
+        <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+        <line num="6" count="11" type="stmt"/>
+        <line num="7" count="11" type="stmt"/>
+        <line num="8" count="11" type="stmt"/>
+        <line num="16" count="11" type="stmt"/>
+      </file>
+      <file name="banners.service.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/banners/banners.service.ts">
+        <metrics statements="53" coveredstatements="45" conditionals="14" coveredconditionals="9" methods="14" coveredmethods="11"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+        <line num="6" count="11" type="stmt"/>
+        <line num="7" count="11" type="stmt"/>
+        <line num="9" count="11" type="stmt"/>
+        <line num="13" count="11" type="stmt"/>
+        <line num="14" count="11" type="stmt"/>
+        <line num="17" count="11" type="stmt"/>
+        <line num="18" count="11" type="stmt"/>
+        <line num="19" count="11" type="stmt"/>
+        <line num="27" count="3" type="stmt"/>
+        <line num="28" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="32" count="2" type="stmt"/>
+        <line num="34" count="2" type="stmt"/>
+        <line num="35" count="2" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="38" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="47" count="10" type="stmt"/>
+        <line num="48" count="10" type="cond" truecount="2" falsecount="0"/>
+        <line num="49" count="10" type="stmt"/>
+        <line num="61" count="2" type="stmt"/>
+        <line num="62" count="2" type="stmt"/>
+        <line num="63" count="2" type="stmt"/>
+        <line num="80" count="6" type="stmt"/>
+        <line num="81" count="6" type="stmt"/>
+        <line num="82" count="6" type="cond" truecount="1" falsecount="0"/>
+        <line num="83" count="2" type="stmt"/>
+        <line num="84" count="2" type="stmt"/>
+        <line num="86" count="4" type="stmt"/>
+        <line num="96" count="4" type="stmt"/>
+        <line num="98" count="4" type="cond" truecount="2" falsecount="1"/>
+        <line num="99" count="0" type="stmt"/>
+        <line num="106" count="4" type="cond" truecount="1" falsecount="0"/>
+        <line num="107" count="2" type="stmt"/>
+        <line num="108" count="2" type="stmt"/>
+        <line num="109" count="2" type="stmt"/>
+        <line num="112" count="4" type="stmt"/>
+        <line num="113" count="4" type="stmt"/>
+        <line num="114" count="2" type="stmt"/>
+        <line num="120" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="121" count="1" type="stmt"/>
+        <line num="123" count="2" type="stmt"/>
+        <line num="130" count="0" type="stmt"/>
+        <line num="131" count="0" type="stmt"/>
+        <line num="134" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="135" count="0" type="stmt"/>
+        <line num="138" count="0" type="cond" truecount="0" falsecount="3"/>
+        <line num="139" count="0" type="stmt"/>
+        <line num="142" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.banners.decorators.swagger">
+      <metrics statements="31" coveredstatements="31" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="6"/>
+      <file name="api-create-banner.decorator.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/banners/decorators/swagger/api-create-banner.decorator.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="9" count="11" type="stmt"/>
+        <line num="10" count="11" type="stmt"/>
+      </file>
+      <file name="api-delete-banner.decorator.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/banners/decorators/swagger/api-delete-banner.decorator.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+      </file>
+      <file name="api-get-all-active-banner.decorator.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/banners/decorators/swagger/api-get-all-active-banner.decorator.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+      </file>
+      <file name="api-get-all-banners.decorator.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/banners/decorators/swagger/api-get-all-banners.decorator.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+      </file>
+      <file name="api-get-banner-by-id.decorator.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/banners/decorators/swagger/api-get-banner-by-id.decorator.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+      </file>
+      <file name="api-update-banner.decorator.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/banners/decorators/swagger/api-update-banner.decorator.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+      </file>
+      <file name="index.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/banners/decorators/swagger/index.ts">
+        <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+        <line num="6" count="11" type="stmt"/>
+        <line num="8" count="11" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.banners.dto">
+      <metrics statements="20" coveredstatements="19" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="2"/>
+      <file name="create-banner.dto.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/banners/dto/create-banner.dto.ts">
+        <metrics statements="15" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="2"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="6" count="11" type="stmt"/>
+        <line num="16" count="11" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="26" count="11" type="stmt"/>
+        <line num="33" count="3" type="stmt"/>
+        <line num="36" count="11" type="stmt"/>
+        <line num="46" count="3" type="stmt"/>
+        <line num="47" count="11" type="stmt"/>
+        <line num="55" count="11" type="stmt"/>
+        <line num="65" count="11" type="stmt"/>
+        <line num="77" count="11" type="stmt"/>
+      </file>
+      <file name="update-banner.dto.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/banners/dto/update-banner.dto.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="6" count="11" type="stmt"/>
+        <line num="8" count="11" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.banners.utils">
+      <metrics statements="13" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="7" coveredmethods="1"/>
+      <file name="banner.repository.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/banners/utils/banner.repository.ts">
+        <metrics statements="13" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="7" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="6" count="11" type="stmt"/>
+        <line num="7" count="11" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="34" count="0" type="stmt"/>
+        <line num="38" count="0" type="stmt"/>
+        <line num="45" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.banners.validations">
+      <metrics statements="40" coveredstatements="34" conditionals="43" coveredconditionals="27" methods="4" coveredmethods="4"/>
+      <file name="banner.validator.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/banners/validations/banner.validator.ts">
+        <metrics statements="40" coveredstatements="34" conditionals="43" coveredconditionals="27" methods="4" coveredmethods="4"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="6" count="11" type="stmt"/>
+        <line num="8" count="11" type="stmt"/>
+        <line num="11" count="11" type="stmt"/>
+        <line num="12" count="11" type="stmt"/>
+        <line num="14" count="11" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="20" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="22" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="2" type="stmt"/>
+        <line num="28" count="2" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="59" count="4" type="stmt"/>
+        <line num="61" count="4" type="stmt"/>
+        <line num="70" count="4" type="cond" truecount="0" falsecount="1"/>
+        <line num="71" count="0" type="stmt"/>
+        <line num="75" count="4" type="cond" truecount="3" falsecount="0"/>
+        <line num="76" count="1" type="stmt"/>
+        <line num="79" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="80" count="3" type="cond" truecount="2" falsecount="1"/>
+        <line num="81" count="3" type="stmt"/>
+        <line num="84" count="2" type="cond" truecount="0" falsecount="1"/>
+        <line num="85" count="0" type="stmt"/>
+        <line num="89" count="2" type="stmt"/>
+        <line num="90" count="2" type="cond" truecount="0" falsecount="1"/>
+        <line num="91" count="0" type="stmt"/>
+        <line num="95" count="2" type="cond" truecount="2" falsecount="1"/>
+        <line num="96" count="0" type="stmt"/>
+        <line num="103" count="2" type="stmt"/>
+        <line num="106" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="108" count="2" type="cond" truecount="0" falsecount="1"/>
+        <line num="109" count="0" type="stmt"/>
+        <line num="112" count="0" type="stmt"/>
+        <line num="117" count="2" type="stmt"/>
+        <line num="120" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.banners.validations.utils">
+      <metrics statements="63" coveredstatements="43" conditionals="26" coveredconditionals="14" methods="5" coveredmethods="5"/>
+      <file name="get-position.utils.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/banners/validations/utils/get-position.utils.ts">
+        <metrics statements="8" coveredstatements="6" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="6" count="11" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="11" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+      </file>
+      <file name="index.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/banners/validations/utils/index.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+      </file>
+      <file name="validate-banner-count.utils.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/banners/validations/utils/validate-banner-count.utils.ts">
+        <metrics statements="9" coveredstatements="7" conditionals="5" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="6" count="11" type="stmt"/>
+        <line num="15" count="3" type="stmt"/>
+        <line num="21" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="46" count="3" type="stmt"/>
+        <line num="48" count="3" type="cond" truecount="0" falsecount="1"/>
+        <line num="49" count="0" type="stmt"/>
+        <line num="52" count="0" type="stmt"/>
+      </file>
+      <file name="validate-dates.utils.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/banners/validations/utils/validate-dates.utils.ts">
+        <metrics statements="6" coveredstatements="6" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+        <line num="6" count="5" type="cond" truecount="3" falsecount="0"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+      </file>
+      <file name="validate-display-order.utils.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/banners/validations/utils/validate-display-order.utils.ts">
+        <metrics statements="14" coveredstatements="8" conditionals="8" coveredconditionals="4" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="6" count="11" type="stmt"/>
+        <line num="12" count="3" type="cond" truecount="0" falsecount="1"/>
+        <line num="14" count="3" type="cond" truecount="0" falsecount="1"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="21" count="3" type="cond" truecount="2" falsecount="1"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="30" count="3" type="stmt"/>
+        <line num="37" count="3" type="cond" truecount="0" falsecount="1"/>
+        <line num="38" count="0" type="stmt"/>
+        <line num="41" count="0" type="stmt"/>
+      </file>
+      <file name="validate-renewal-logic.utils.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/banners/validations/utils/validate-renewal-logic.utils.ts">
+        <metrics statements="21" coveredstatements="11" conditionals="9" coveredconditionals="4" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="6" count="11" type="stmt"/>
+        <line num="12" count="2" type="cond" truecount="0" falsecount="1"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="18" count="2" type="cond" truecount="2" falsecount="1"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="24" count="2" type="cond" truecount="0" falsecount="1"/>
+        <line num="25" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="29" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="36" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="37" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.common">
+      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="common.module.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/common/common.module.ts">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.common.dto">
+      <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+      <file name="pagination.dto.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/common/dto/pagination.dto.ts">
+        <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+        <line num="14" count="5" type="stmt"/>
+        <line num="15" count="11" type="stmt"/>
+        <line num="25" count="5" type="stmt"/>
+        <line num="26" count="11" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.common.prisma">
+      <metrics statements="15" coveredstatements="15" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+      <file name="prisma.module.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/common/prisma/prisma.module.ts">
+        <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="12" count="11" type="stmt"/>
+        <line num="13" count="11" type="stmt"/>
+        <line num="14" count="11" type="stmt"/>
+        <line num="15" count="11" type="stmt"/>
+        <line num="16" count="11" type="stmt"/>
+        <line num="18" count="11" type="stmt"/>
+        <line num="26" count="11" type="stmt"/>
+      </file>
+      <file name="prisma.service.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/common/prisma/prisma.service.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+        <line num="7" count="11" type="stmt"/>
+        <line num="11" count="11" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.common.utils.hadle-request">
+      <metrics statements="82" coveredstatements="43" conditionals="20" coveredconditionals="3" methods="8" coveredmethods="6"/>
+      <file name="handle-request-mailer.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/common/utils/hadle-request/handle-request-mailer.ts">
+        <metrics statements="13" coveredstatements="2" conditionals="5" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="4" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="9" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="14" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="19" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="20" count="0" type="stmt"/>
+      </file>
+      <file name="handle-request-notification.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/common/utils/hadle-request/handle-request-notification.ts">
+        <metrics statements="6" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+      </file>
+      <file name="handle-request.base.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/common/utils/hadle-request/handle-request.base.ts">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="9" count="102" type="stmt"/>
+        <line num="10" count="102" type="stmt"/>
+        <line num="12" count="20" type="stmt"/>
+        <line num="13" count="20" type="stmt"/>
+        <line num="15" count="20" type="stmt"/>
+      </file>
+      <file name="handle-request.cloudinary.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/common/utils/hadle-request/handle-request.cloudinary.ts">
+        <metrics statements="6" coveredstatements="4" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="4" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+      </file>
+      <file name="handle-request.multer.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/common/utils/hadle-request/handle-request.multer.ts">
+        <metrics statements="9" coveredstatements="4" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="4" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="5" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="7" count="0" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+      </file>
+      <file name="handle-request.prisma.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/common/utils/hadle-request/handle-request.prisma.ts">
+        <metrics statements="23" coveredstatements="8" conditionals="8" coveredconditionals="1" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="7" count="11" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="15" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="21" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="27" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="32" count="0" type="stmt"/>
+        <line num="35" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="36" count="0" type="stmt"/>
+        <line num="37" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="38" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="40" count="0" type="stmt"/>
+        <line num="41" count="0" type="stmt"/>
+        <line num="44" count="0" type="stmt"/>
+      </file>
+      <file name="handle-request.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/common/utils/hadle-request/handle-request.ts">
+        <metrics statements="19" coveredstatements="17" conditionals="4" coveredconditionals="2" methods="2" coveredmethods="2"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+        <line num="6" count="11" type="stmt"/>
+        <line num="7" count="11" type="stmt"/>
+        <line num="9" count="11" type="stmt"/>
+        <line num="17" count="11" type="stmt"/>
+        <line num="22" count="102" type="stmt"/>
+        <line num="23" count="20" type="cond" truecount="1" falsecount="0"/>
+        <line num="24" count="19" type="stmt"/>
+        <line num="25" count="19" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="29" count="3" type="stmt"/>
+        <line num="30" count="3" type="stmt"/>
+        <line num="32" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="36" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="37" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.common.validators">
+      <metrics statements="12" coveredstatements="11" conditionals="1" coveredconditionals="1" methods="5" coveredmethods="4"/>
+      <file name="at-least-one-field.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/common/validators/at-least-one-field.ts">
+        <metrics statements="12" coveredstatements="11" conditionals="1" coveredconditionals="1" methods="5" coveredmethods="4"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="9" count="11" type="stmt"/>
+        <line num="11" count="11" type="stmt"/>
+        <line num="15" count="22" type="stmt"/>
+        <line num="16" count="22" type="stmt"/>
+        <line num="24" count="13" type="stmt"/>
+        <line num="25" count="35" type="stmt"/>
+        <line num="27" count="13" type="cond" truecount="1" falsecount="0"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="35" count="13" type="stmt"/>
+        <line num="39" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.files">
+      <metrics statements="23" coveredstatements="10" conditionals="2" coveredconditionals="0" methods="7" coveredmethods="1"/>
+      <file name="files.module.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/files/files.module.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="11" count="11" type="stmt"/>
+      </file>
+      <file name="files.service.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/files/files.service.ts">
+        <metrics statements="18" coveredstatements="5" conditionals="2" coveredconditionals="0" methods="7" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="6" count="11" type="stmt"/>
+        <line num="7" count="9" type="stmt"/>
+        <line num="9" count="9" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="16" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="29" count="0" type="stmt"/>
+        <line num="30" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="32" count="0" type="stmt"/>
+        <line num="34" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.files.helpers">
+      <metrics statements="8" coveredstatements="6" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="fileFilter.helper.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/files/helpers/fileFilter.helper.ts">
+        <metrics statements="8" coveredstatements="6" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+        <line num="7" count="11" type="stmt"/>
+        <line num="12" count="4" type="cond" truecount="0" falsecount="1"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="16" count="4" type="cond" truecount="0" falsecount="1"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="25" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.files.providers">
+      <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <file name="claudinary.provider.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/files/providers/claudinary.provider.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="7" count="11" type="stmt"/>
+        <line num="12" count="11" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.mail">
+      <metrics statements="25" coveredstatements="15" conditionals="5" coveredconditionals="2" methods="7" coveredmethods="2"/>
+      <file name="mail.service.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/mail/mail.service.ts">
+        <metrics statements="16" coveredstatements="6" conditionals="1" coveredconditionals="0" methods="6" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="6" count="11" type="stmt"/>
+        <line num="7" count="22" type="stmt"/>
+        <line num="9" count="22" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="18" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="46" count="0" type="stmt"/>
+      </file>
+      <file name="mailer.module.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/mail/mailer.module.ts">
+        <metrics statements="9" coveredstatements="9" conditionals="4" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+        <line num="6" count="11" type="stmt"/>
+        <line num="8" count="11" type="stmt"/>
+        <line num="15" count="11" type="stmt"/>
+        <line num="44" count="11" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.notifications">
+      <metrics statements="52" coveredstatements="13" conditionals="9" coveredconditionals="0" methods="7" coveredmethods="1"/>
+      <file name="notifications.service.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/notifications/notifications.service.ts">
+        <metrics statements="52" coveredstatements="13" conditionals="9" coveredconditionals="0" methods="7" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+        <line num="8" count="11" type="stmt"/>
+        <line num="9" count="11" type="stmt"/>
+        <line num="10" count="11" type="stmt"/>
+        <line num="13" count="11" type="stmt"/>
+        <line num="14" count="11" type="stmt"/>
+        <line num="18" count="11" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="25" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="29" count="0" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="35" count="0" type="stmt"/>
+        <line num="36" count="0" type="stmt"/>
+        <line num="38" count="0" type="stmt"/>
+        <line num="48" count="11" type="stmt"/>
+        <line num="49" count="0" type="stmt"/>
+        <line num="51" count="0" type="stmt"/>
+        <line num="53" count="0" type="stmt"/>
+        <line num="54" count="0" type="stmt"/>
+        <line num="56" count="0" type="stmt"/>
+        <line num="57" count="0" type="stmt"/>
+        <line num="58" count="0" type="stmt"/>
+        <line num="59" count="0" type="stmt"/>
+        <line num="60" count="0" type="stmt"/>
+        <line num="61" count="0" type="stmt"/>
+        <line num="65" count="0" type="stmt"/>
+        <line num="67" count="0" type="stmt"/>
+        <line num="73" count="0" type="stmt"/>
+        <line num="81" count="11" type="stmt"/>
+        <line num="82" count="0" type="stmt"/>
+        <line num="84" count="0" type="stmt"/>
+        <line num="86" count="0" type="stmt"/>
+        <line num="87" count="0" type="stmt"/>
+        <line num="88" count="0" type="stmt"/>
+        <line num="89" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="90" count="0" type="stmt"/>
+        <line num="91" count="0" type="stmt"/>
+        <line num="92" count="0" type="stmt"/>
+        <line num="93" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="94" count="0" type="stmt"/>
+        <line num="98" count="0" type="stmt"/>
+        <line num="101" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.users">
+      <metrics statements="121" coveredstatements="114" conditionals="46" coveredconditionals="33" methods="26" coveredmethods="26"/>
+      <file name="users.controller.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/users/users.controller.ts">
+        <metrics statements="27" coveredstatements="27" conditionals="0" coveredconditionals="0" methods="8" coveredmethods="8"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+        <line num="6" count="11" type="stmt"/>
+        <line num="7" count="11" type="stmt"/>
+        <line num="8" count="11" type="stmt"/>
+        <line num="9" count="11" type="stmt"/>
+        <line num="11" count="11" type="stmt"/>
+        <line num="12" count="11" type="stmt"/>
+        <line num="16" count="11" type="stmt"/>
+        <line num="17" count="11" type="stmt"/>
+        <line num="22" count="11" type="stmt"/>
+        <line num="23" count="3" type="stmt"/>
+        <line num="29" count="11" type="stmt"/>
+        <line num="30" count="3" type="stmt"/>
+        <line num="37" count="11" type="stmt"/>
+        <line num="38" count="3" type="stmt"/>
+        <line num="45" count="11" type="stmt"/>
+        <line num="49" count="2" type="stmt"/>
+        <line num="56" count="11" type="stmt"/>
+        <line num="61" count="4" type="stmt"/>
+        <line num="68" count="11" type="stmt"/>
+        <line num="69" count="1" type="stmt"/>
+        <line num="76" count="11" type="stmt"/>
+        <line num="80" count="14" type="stmt"/>
+      </file>
+      <file name="users.module.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/users/users.module.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="12" count="11" type="stmt"/>
+      </file>
+      <file name="users.service.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/users/users.service.ts">
+        <metrics statements="89" coveredstatements="82" conditionals="46" coveredconditionals="33" methods="18" coveredmethods="18"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+        <line num="6" count="11" type="stmt"/>
+        <line num="10" count="11" type="stmt"/>
+        <line num="14" count="11" type="stmt"/>
+        <line num="16" count="11" type="stmt"/>
+        <line num="17" count="11" type="stmt"/>
+        <line num="20" count="3" type="stmt"/>
+        <line num="22" count="3" type="stmt"/>
+        <line num="23" count="3" type="stmt"/>
+        <line num="25" count="3" type="cond" truecount="0" falsecount="1"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="32" count="3" type="cond" truecount="3" falsecount="1"/>
+        <line num="36" count="3" type="stmt"/>
+        <line num="42" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="45" count="3" type="stmt"/>
+        <line num="51" count="6" type="stmt"/>
+        <line num="64" count="3" type="stmt"/>
+        <line num="65" count="3" type="stmt"/>
+        <line num="73" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="74" count="3" type="stmt"/>
+        <line num="75" count="3" type="stmt"/>
+        <line num="94" count="3" type="stmt"/>
+        <line num="95" count="3" type="cond" truecount="0" falsecount="1"/>
+        <line num="96" count="0" type="stmt"/>
+        <line num="97" count="0" type="stmt"/>
+        <line num="100" count="3" type="stmt"/>
+        <line num="102" count="3" type="stmt"/>
+        <line num="105" count="3" type="cond" truecount="1" falsecount="0"/>
+        <line num="106" count="1" type="stmt"/>
+        <line num="107" count="1" type="stmt"/>
+        <line num="109" count="2" type="stmt"/>
+        <line num="110" count="2" type="stmt"/>
+        <line num="121" count="6" type="stmt"/>
+        <line num="123" count="6" type="stmt"/>
+        <line num="124" count="6" type="stmt"/>
+        <line num="127" count="6" type="cond" truecount="1" falsecount="0"/>
+        <line num="128" count="2" type="cond" truecount="0" falsecount="1"/>
+        <line num="129" count="0" type="stmt"/>
+        <line num="132" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="133" count="1" type="stmt"/>
+        <line num="135" count="1" type="stmt"/>
+        <line num="136" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="137" count="1" type="stmt"/>
+        <line num="142" count="1" type="stmt"/>
+        <line num="143" count="1" type="stmt"/>
+        <line num="147" count="4" type="cond" truecount="0" falsecount="1"/>
+        <line num="148" count="0" type="stmt"/>
+        <line num="150" count="4" type="stmt"/>
+        <line num="151" count="4" type="stmt"/>
+        <line num="152" count="4" type="cond" truecount="3" falsecount="0"/>
+        <line num="153" count="1" type="stmt"/>
+        <line num="156" count="3" type="cond" truecount="3" falsecount="0"/>
+        <line num="157" count="1" type="stmt"/>
+        <line num="160" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="161" count="2" type="stmt"/>
+        <line num="165" count="2" type="cond" truecount="1" falsecount="0"/>
+        <line num="166" count="1" type="stmt"/>
+        <line num="169" count="1" type="stmt"/>
+        <line num="170" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="171" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="172" count="1" type="stmt"/>
+        <line num="174" count="2" type="stmt"/>
+        <line num="177" count="1" type="stmt"/>
+        <line num="182" count="1" type="stmt"/>
+        <line num="183" count="1" type="stmt"/>
+        <line num="194" count="15" type="stmt"/>
+        <line num="196" count="15" type="stmt"/>
+        <line num="199" count="15" type="cond" truecount="1" falsecount="0"/>
+        <line num="200" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="201" count="0" type="stmt"/>
+        <line num="203" count="1" type="stmt"/>
+        <line num="204" count="1" type="stmt"/>
+        <line num="208" count="14" type="cond" truecount="0" falsecount="1"/>
+        <line num="209" count="0" type="stmt"/>
+        <line num="211" count="14" type="stmt"/>
+        <line num="212" count="14" type="stmt"/>
+        <line num="213" count="14" type="cond" truecount="3" falsecount="0"/>
+        <line num="214" count="1" type="stmt"/>
+        <line num="216" count="13" type="cond" truecount="3" falsecount="0"/>
+        <line num="217" count="1" type="stmt"/>
+        <line num="219" count="12" type="stmt"/>
+        <line num="225" count="14" type="cond" truecount="1" falsecount="0"/>
+        <line num="226" count="3" type="stmt"/>
+        <line num="228" count="9" type="stmt"/>
+        <line num="233" count="9" type="stmt"/>
+        <line num="234" count="9" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.users.decorators.swagger">
+      <metrics statements="26" coveredstatements="26" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="5"/>
+      <file name="api-create-user.decorator.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/users/decorators/swagger/api-create-user.decorator.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+      </file>
+      <file name="api-delete-user.decorator.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/users/decorators/swagger/api-delete-user.decorator.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="5" count="22" type="stmt"/>
+      </file>
+      <file name="api-get-user-by-term.decorator.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/users/decorators/swagger/api-get-user-by-term.decorator.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+      </file>
+      <file name="api-get-user.decorator.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/users/decorators/swagger/api-get-user.decorator.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+      </file>
+      <file name="api-update-user.controler.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/users/decorators/swagger/api-update-user.controler.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="5" count="22" type="stmt"/>
+      </file>
+      <file name="index.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/users/decorators/swagger/index.ts">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="4" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+        <line num="7" count="11" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.users.dto">
+      <metrics statements="21" coveredstatements="21" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="3"/>
+      <file name="create-user.dto.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/users/dto/create-user.dto.ts">
+        <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+        <line num="16" count="3" type="stmt"/>
+        <line num="18" count="11" type="stmt"/>
+        <line num="31" count="4" type="stmt"/>
+        <line num="33" count="11" type="stmt"/>
+        <line num="44" count="11" type="stmt"/>
+        <line num="55" count="11" type="stmt"/>
+      </file>
+      <file name="update-user.dto.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/users/dto/update-user.dto.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="9" count="11" type="stmt"/>
+        <line num="15" count="11" type="stmt"/>
+      </file>
+      <file name="user-identifier.dto.ts" path="/Users/lopez/Projects/Trabajos Practicos/Tec_avz_prog/tp-banners/src/users/dto/user-identifier.dto.ts">
+        <metrics statements="6" coveredstatements="6" conditionals="2" coveredconditionals="1" methods="1" coveredmethods="1"/>
+        <line num="1" count="11" type="stmt"/>
+        <line num="2" count="11" type="stmt"/>
+        <line num="3" count="11" type="stmt"/>
+        <line num="5" count="11" type="stmt"/>
+        <line num="11" count="21" type="cond" truecount="1" falsecount="1"/>
+        <line num="17" count="11" type="stmt"/>
+      </file>
+    </package>
   </project>
 </coverage>

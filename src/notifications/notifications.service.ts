@@ -7,7 +7,7 @@ import { handleRequest } from 'src/common/utils/hadle-request/handle-request';
 @Injectable()
 export class NotificationsService {
     private readonly logger = new Logger(NotificationsService.name);
-    private static readonly DAILY = CronExpression.EVERY_DAY_AT_1AM;
+    private static readonly DAILY = CronExpression.EVERY_DAY_AT_1AM; //EVERY 10 SECONDS METODO DE TESTEO
 
     constructor(
         private readonly bannerRepo: BannerRepository,
