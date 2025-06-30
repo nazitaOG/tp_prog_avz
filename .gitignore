@@ -61,3 +61,6 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 #Variables de entorno
 .env
+
+/coverage
+/coverage-e2e
