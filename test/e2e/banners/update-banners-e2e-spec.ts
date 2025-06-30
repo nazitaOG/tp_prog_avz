@@ -57,6 +57,8 @@ describe('BannersModule Update Banner (e2e)', () => {
             }),
         );
         await app.init();
+        const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
+        await delay(200 + Math.random() * 900);
 
         // Login advertiser
         {

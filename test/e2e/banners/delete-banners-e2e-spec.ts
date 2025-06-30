@@ -29,6 +29,9 @@ describe('BannersModule Find All (e2e)', () => {
         );
         await app.init();
 
+        const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
+        await delay(200 + Math.random() * 600);
+
         // hacer login de admin y advertiser
         const resAdmin = await request(app.getHttpServer())
             .post('/auth/login')

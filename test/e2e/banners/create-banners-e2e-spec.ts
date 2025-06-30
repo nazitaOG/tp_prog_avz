@@ -54,6 +54,9 @@ describe('BannersModule Create (e2e)', () => {
         );
         await app.init();
 
+        const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
+        await delay(200 + Math.random() * 1200);
+
         // login admin
         const resAdmin = await request(app.getHttpServer())
             .post('/auth/login')

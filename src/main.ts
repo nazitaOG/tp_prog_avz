@@ -3,7 +3,11 @@ import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule } from '@nestjs/swagger';
 import { DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import * as crypto from 'crypto'; //////para que no se queje docker
 
+if (!globalThis.crypto?.randomUUID) {
+  (globalThis as any).crypto = crypto;
+}
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 

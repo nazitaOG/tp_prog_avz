@@ -7,6 +7,9 @@ export async function validateDisplayOrder(
     prisma: PrismaService,
     order: number | undefined,
     maxBanners: number,
+    positionId: number,
+    startDate: Date,
+    endDate: Date | null,
     excludeId?: string
 ) {
     if (maxBanners <= 1) return;
@@ -27,19 +30,45 @@ export async function validateDisplayOrder(
         );
     }
 
-    const conflict = await prisma.banner.findFirst({
-        where: {
-            display_order: order,
-            position: { max_banners: maxBanners },
-            NOT: excludeId ? { id: excludeId } : undefined,
-        },
-    });
+    const baseFilter: any = {
+        display_order: order,
+        position_id: positionId,
+        NOT: excludeId ? { id: excludeId } : undefined,
+    };
+
+    const whereClause = endDate == null
+        ? {
+            ...baseFilter,
+            AND: [
+                {
+                    OR: [
+                        { end_date: null },
+                        { end_date: { gt: startDate } },
+                    ],
+                },
+            ],
+        }
+        : {
+            ...baseFilter,
+            AND: [
+                { start_date: { lte: endDate } },
+                {
+                    OR: [
+                        { end_date: null },
+                        { end_date: { gte: startDate } },
+                    ],
+                },
+            ],
+        };
+
+    const conflict = await prisma.banner.findFirst({ where: whereClause });
+
     if (conflict) {
         validateOrderLogger.error(
-            `display_order ${order} already used in position with max_banners=${maxBanners}`
+            `display_order ${order} already used in position ${positionId} during active date range`
         );
         throw new BadRequestException(
-            `display_order ${order} already used in this position`
+            `display_order ${order} already used in this position and date range`
         );
     }
 }

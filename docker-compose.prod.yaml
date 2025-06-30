@@ -1,0 +1,26 @@
+services:
+  tp-banners:
+    depends_on:
+      - db
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: tp-banners
+    container_name: tp-banners
+    restart: unless-stopped 
+    ports:
+      - "4000:${PORT}"
+    env_file:
+      - .env.prod
+
+
+  db:
+    image: postgres:16.9-bullseye
+    container_name: tp-banners-db
+    restart: always
+    ports:
+      - 5432:5432
+    env_file:
+      - .env.prod
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
